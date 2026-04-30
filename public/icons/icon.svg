@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#0a0a0a"/>
+  <rect width="512" height="512" rx="96" fill="url(#grad)" opacity="0.15"/>
+  <defs>
+    <linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#d4af37"/>
+      <stop offset="100%" stop-color="#f0c040"/>
+    </linearGradient>
+  </defs>
+  <!-- Scissors icon -->
+  <g transform="translate(256,256)" fill="#d4af37">
+    <circle cx="-80" cy="-80" r="36" fill="none" stroke="#d4af37" stroke-width="18"/>
+    <circle cx="80" cy="-80" r="36" fill="none" stroke="#d4af37" stroke-width="18"/>
+    <line x1="-55" y1="-55" x2="110" y2="110" stroke="#d4af37" stroke-width="18" stroke-linecap="round"/>
+    <line x1="55" y1="-55" x2="-110" y2="110" stroke="#d4af37" stroke-width="18" stroke-linecap="round"/>
+  </g>
+  <!-- S lettermark -->
+  <text x="256" y="310" text-anchor="middle" font-family="serif" font-size="120" font-weight="bold" fill="#d4af37" opacity="0.12">S</text>
+</svg>

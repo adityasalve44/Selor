@@ -1,4 +1,29 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Selor Barber Management System
+
+Selor is a modern, responsive Barber Management System built with Next.js (App Router), Tailwind CSS v4, and Zustand. It provides a comprehensive suite of tools for barbershop administration and client booking, featuring a premium design aligned with Material Design 3 guidelines.
+
+## Features
+
+- **Dark Mode Support**: Global theme toggling utilizing CSS variables and Tailwind's dark mode strategies.
+- **Unified Navigation**: Centralized layout wrappers (`AdminNav`, `CustomerNav`) ensuring consistent user experience across the app.
+- **Responsive Layout**: Fully optimized for mobile, tablet, and desktop viewports, with horizontal scroll support for large data tables.
+- **Localization**: Implements Indian Standard Time (IST) and `DD-MM-YYYY` date formats, along with Indian Rupee (₹) currency symbols throughout.
+- **State Management**: Zustand for global state.
+
+## Tech Stack
+
+- Next.js 16 (App Router)
+- Tailwind CSS v4
+- Zustand
+- Material Symbols Outlined
+
+## Project Structure
+
+- `/app/admin`: Administrative dashboard, booking management, staff schedules, inventory tracking, and client records.
+- `/app/book`: Client-facing booking flow (service selection, time selection, and confirmation).
+- `/app/dashboard`: Client dashboard tracking upcoming appointments and loyalty tier progress.
+- `/app/components`: Reusable UI components (e.g., `ThemeProvider`, `AdminNav`, `CustomerNav`).
+- `/app/globals.css`: Core design system, containing CSS variables for colors, spacing, and typography.
 
 ## Getting Started
 
@@ -16,21 +41,18 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Design System
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The application utilizes a rich design system focusing on:
+- HSL-tailored color palettes supporting both light and dark modes.
+- Modern typography via `next/font` (Geist / Manrope).
+- Glassmorphism effects and dynamic animations.
+- Material Design 3 standards for layout and component structure.
 
-## Learn More
+## Important Note
 
-To learn more about Next.js, take a look at the following resources:
+For any timezone-related logic, please refer to and use the utilities in `lib/time.ts` to ensure consistency.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
