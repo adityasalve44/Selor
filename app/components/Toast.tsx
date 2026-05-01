@@ -59,38 +59,41 @@ function ToastItem({ item, onDismiss }: { item: ToastItem; onDismiss: (id: strin
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // mount with slight delay to trigger CSS transition
     requestAnimationFrame(() => setVisible(true));
   }, []);
 
   const icon =
-    item.type === 'success' ? 'check_circle' : item.type === 'error' ? 'error' : 'info';
+    item.type === 'success' ? 'verified' : item.type === 'error' ? 'terminal' : 'info';
 
   const colors =
     item.type === 'success'
-      ? 'bg-surface-container-lowest border-primary/30 text-on-surface'
+      ? 'bg-surface-container-low border-primary/20'
       : item.type === 'error'
-      ? 'bg-surface-container-lowest border-error/30 text-on-surface'
-      : 'bg-surface-container-lowest border-outline/30 text-on-surface';
+      ? 'bg-surface-container-low border-error/20'
+      : 'bg-surface-container-low border-outline-variant/20';
 
   const iconColor =
-    item.type === 'success' ? 'text-primary' : item.type === 'error' ? 'text-error' : 'text-tertiary';
+    item.type === 'success' ? 'text-primary' : item.type === 'error' ? 'text-error' : 'text-on-surface-variant opacity-40';
 
   return (
     <div
-      className={`pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-xl border shadow-lg backdrop-blur-sm
-        transition-all duration-300 max-w-sm
+      className={`pointer-events-auto flex items-center gap-5 px-6 py-4 rounded-md border shadow-technical
+        transition-all duration-500 max-w-sm
         ${colors}
-        ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}
+        ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'}`}
     >
-      <span className={`material-symbols-outlined text-[20px] shrink-0 ${iconColor}`}
-        style={{ fontVariationSettings: "'FILL' 1" }}>
-        {icon}
-      </span>
-      <span className="font-label-md text-sm flex-1">{item.message}</span>
+      <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${iconColor} bg-surface-container-high/40 shadow-inner`}>
+        <span className="material-symbols-outlined text-[20px]">
+          {icon}
+        </span>
+      </div>
+      <div className="flex-1 space-y-1">
+        <span className="font-label-md text-[10px] uppercase tracking-[0.2em] opacity-40 block">System Event</span>
+        <span className="font-display-lg text-lg text-on-surface lowercase tracking-tighter block leading-tight">{item.message}</span>
+      </div>
       <button
         onClick={() => onDismiss(item.id)}
-        className="text-outline hover:text-on-surface transition-colors shrink-0"
+        className="text-on-surface-variant opacity-20 hover:opacity-100 transition-all shrink-0"
         aria-label="Dismiss"
       >
         <span className="material-symbols-outlined text-[18px]">close</span>

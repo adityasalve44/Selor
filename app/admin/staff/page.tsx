@@ -24,53 +24,53 @@ function StaffModal({
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-end md:items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] flex items-end md:items-center justify-center p-8 bg-black/80 backdrop-blur-sm"
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div className="w-full max-w-md bg-surface-container-lowest rounded-2xl shadow-2xl p-6 space-y-5 border border-outline-variant/30">
+      <div className="w-full max-w-md bg-surface-container-low rounded-lg shadow-technical p-10 space-y-8 border border-white/5">
         <div className="flex items-center justify-between">
-          <h2 className="font-headline-md text-on-surface">{initial ? 'Edit Staff Member' : 'Add New Staff'}</h2>
-          <button onClick={onClose} className="text-outline hover:text-on-surface transition-colors">
+          <h2 className="font-display-lg text-2xl text-on-surface lowercase tracking-tighter">{initial ? 'Edit Artisan' : 'New Artisan'}</h2>
+          <button onClick={onClose} className="text-on-surface-variant opacity-40 hover:opacity-100 transition-all">
             <span className="material-symbols-outlined">close</span>
           </button>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-6">
           <label className="block">
-            <span className="font-label-sm text-tertiary uppercase tracking-wider block mb-1">Full Name</span>
+            <span className="font-label-md text-on-surface-variant uppercase tracking-[0.2em] text-[10px] opacity-40 block mb-3">Identity</span>
             <input
               id="staff-name"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g. Rahul Sharma"
-              className="w-full px-4 py-3 rounded-lg bg-surface-container border border-outline-variant
-                text-on-surface font-body-md focus:outline-none focus:ring-2 focus:ring-primary-container
-                transition-all placeholder:text-outline"
+              className="w-full px-5 py-4 rounded-md bg-surface-container-high border-none
+                text-on-surface font-display-lg text-xl focus:ring-1 focus:ring-primary
+                transition-all placeholder:text-on-surface-variant/20"
             />
           </label>
 
           {initial && (
-            <div className="flex items-center justify-between p-4 rounded-lg bg-surface-container border border-outline-variant/30">
+            <div className="flex items-center justify-between p-6 rounded-md bg-surface-container-high/50">
               <div>
-                <p className="font-label-md text-on-surface">Active Status</p>
-                <p className="font-body-sm text-tertiary">Inactive staff won&apos;t appear in booking flow</p>
+                <p className="font-label-md text-on-surface uppercase tracking-widest text-[11px]">Active status</p>
+                <p className="font-label-md text-on-surface-variant text-[9px] opacity-40 uppercase tracking-widest mt-1">Availability in system</p>
               </div>
               <button
                 id="staff-active-toggle"
                 onClick={() => setIsActive((v) => !v)}
-                className={`relative w-12 h-6 rounded-full transition-colors ${isActive ? 'bg-primary-container' : 'bg-surface-container-high'}`}
+                className={`relative w-14 h-7 rounded-full transition-colors ${isActive ? 'bg-primary' : 'bg-surface-container-highest'}`}
               >
-                <span className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-transform ${isActive ? 'left-7' : 'left-1'}`} />
+                <span className={`absolute top-1 w-5 h-5 bg-white rounded-full shadow-technical transition-transform ${isActive ? 'left-8' : 'left-1'}`} />
               </button>
             </div>
           )}
         </div>
 
-        <div className="flex gap-3 pt-2">
+        <div className="flex gap-4 pt-4">
           <button
             onClick={onClose}
-            className="flex-1 py-3 border border-outline-variant rounded-lg font-label-md text-on-surface-variant hover:bg-surface-container transition-colors"
+            className="flex-1 py-4 font-label-md text-on-surface-variant uppercase tracking-[0.2em] text-[11px] opacity-40 hover:opacity-100 transition-all"
           >
             Cancel
           </button>
@@ -78,12 +78,12 @@ function StaffModal({
             id="staff-save-btn"
             disabled={loading || !name.trim()}
             onClick={() => onSave(name.trim(), initial ? isActive : undefined)}
-            className="flex-1 py-3 bg-primary-container text-on-primary-container rounded-lg font-label-md
-              hover:brightness-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed
-              flex items-center justify-center gap-2"
+            className="flex-1 py-4 bg-primary text-on-primary rounded-md font-label-md uppercase tracking-[0.2em] text-[11px]
+              hover:opacity-90 shadow-technical transition-all disabled:opacity-30 disabled:cursor-not-allowed
+              flex items-center justify-center gap-3"
           >
-            {loading && <span className="w-4 h-4 border-2 border-on-primary-container/30 border-t-on-primary-container rounded-full animate-spin" />}
-            {initial ? 'Save Changes' : 'Add Staff'}
+            {loading && <span className="w-4 h-4 border-2 border-on-primary/30 border-t-on-primary rounded-full animate-spin" />}
+            {initial ? 'Save Profile' : 'Confirm Artisan'}
           </button>
         </div>
       </div>
@@ -135,35 +135,36 @@ function InvitePanel() {
   }
 
   const expiryOptions = [
-    { label: '24 hours', value: 24 },
-    { label: '48 hours', value: 48 },
-    { label: '72 hours', value: 72 },
-    { label: '7 days', value: 168 },
+    { label: '24h', value: 24 },
+    { label: '48h', value: 48 },
+    { label: '72h', value: 72 },
+    { label: '7d', value: 168 },
   ];
 
   return (
-    <div className="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant/30 shadow-md shadow-black/5">
-      <div className="flex items-center gap-3 mb-4">
-        <span className="p-2 bg-surface-container rounded-lg">
-          <span className="material-symbols-outlined text-primary-container text-[22px]">link</span>
-        </span>
+    <div className="bg-surface-container-low rounded-lg p-10 shadow-technical border border-white/5 relative overflow-hidden group">
+      <div className="absolute top-0 right-0 w-2 h-full bg-primary/20"></div>
+      <div className="flex items-center gap-5 mb-10">
+        <div className="w-12 h-12 rounded-md bg-surface-container-high flex items-center justify-center text-primary shadow-technical">
+          <span className="material-symbols-outlined text-[24px]">key_visualizer</span>
+        </div>
         <div>
-          <h3 className="font-headline-sm text-on-surface">Invite Staff</h3>
-          <p className="font-body-sm text-tertiary">Generate a one-time invite link</p>
+          <h3 className="font-display-lg text-xl text-on-surface lowercase tracking-tighter">recruit artisan</h3>
+          <p className="font-label-md text-on-surface-variant text-[9px] opacity-40 uppercase tracking-[0.2em] mt-1">One-time authentication link</p>
         </div>
       </div>
 
-      <div className="mb-4">
-        <p className="font-label-sm text-tertiary uppercase tracking-wider mb-2">Expires in</p>
-        <div className="flex flex-wrap gap-2">
+      <div className="mb-10">
+        <p className="font-label-md text-on-surface-variant uppercase tracking-[0.2em] text-[9px] opacity-40 mb-4">Availability window</p>
+        <div className="grid grid-cols-4 gap-3">
           {expiryOptions.map((o) => (
             <button
               key={o.value}
               onClick={() => setHours(o.value)}
-              className={`px-3 py-1.5 rounded-lg font-label-sm transition-colors ${
+              className={`py-3 rounded-md font-label-md text-[10px] uppercase tracking-widest transition-all ${
                 hours === o.value
-                  ? 'bg-primary-container text-on-primary-container'
-                  : 'border border-outline-variant text-on-surface-variant hover:bg-surface-container'
+                  ? 'bg-primary text-on-primary shadow-technical'
+                  : 'bg-surface-container-high text-on-surface-variant opacity-40 hover:opacity-100'
               }`}
             >
               {o.label}
@@ -176,35 +177,35 @@ function InvitePanel() {
         id="generate-invite-btn"
         onClick={generate}
         disabled={generating}
-        className="w-full py-3 bg-primary-container text-on-primary-container rounded-lg font-label-md
-          hover:brightness-110 transition-all disabled:opacity-50 flex items-center justify-center gap-2 mb-4"
+        className="w-full py-5 bg-primary text-on-primary rounded-md font-label-md uppercase tracking-[0.2em] text-[11px]
+          hover:opacity-90 shadow-technical transition-all disabled:opacity-30 flex items-center justify-center gap-3 mb-6"
       >
         {generating
-          ? <span className="w-4 h-4 border-2 border-on-primary-container/30 border-t-on-primary-container rounded-full animate-spin" />
+          ? <span className="w-4 h-4 border-2 border-on-primary/30 border-t-on-primary rounded-full animate-spin" />
           : <span className="material-symbols-outlined text-[18px]">add_link</span>}
-        Generate Invite Link
+        Generate Secret Key
       </button>
 
       {result && (
-        <div className="space-y-3 animate-in fade-in">
-          <div className="flex items-center gap-2 p-3 bg-surface-container rounded-lg border border-outline-variant/30">
+        <div className="space-y-4 animate-in slide-in-from-bottom-2 fade-in duration-500">
+          <div className="flex items-center gap-4 p-5 bg-surface-container-high rounded-md border border-white/5">
             <input
               id="invite-link-output"
               type="text"
               readOnly
               value={result.deepLink}
-              className="flex-1 bg-transparent text-on-surface font-body-sm text-sm truncate focus:outline-none"
+              className="flex-1 bg-transparent text-on-surface font-label-md text-[11px] truncate focus:outline-none tracking-tight opacity-60"
             />
             <button
               id="copy-invite-btn"
               onClick={copyLink}
-              className={`shrink-0 p-1.5 rounded transition-colors ${copied ? 'text-primary' : 'text-outline hover:text-on-surface'}`}
+              className={`shrink-0 p-2 rounded-md transition-all ${copied ? 'bg-primary text-on-primary shadow-technical' : 'text-on-surface-variant hover:text-primary'}`}
             >
               <span className="material-symbols-outlined text-[18px]">{copied ? 'check' : 'content_copy'}</span>
             </button>
           </div>
-          <p className="font-label-sm text-tertiary text-center">
-            Expires: {new Date(result.expiresAt).toLocaleString('en-IN')}
+          <p className="font-label-md text-on-surface-variant text-[9px] uppercase tracking-[0.2em] opacity-40 text-center">
+            Valid until {new Date(result.expiresAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}
           </p>
         </div>
       )}
@@ -224,50 +225,51 @@ function StaffCard({
   onDeactivate: () => void;
 }) {
   return (
-    <div className="bg-surface-container-lowest rounded-xl p-stack-lg shadow-md shadow-black/5 border border-outline-variant/30 flex flex-col gap-6 hover:shadow-lg transition-shadow">
-      <div className="flex justify-between items-start">
+    <div className="bg-surface-container-low rounded-lg p-10 shadow-technical transition-all duration-500 hover:-translate-y-2 group relative overflow-hidden border border-white/5">
+      <div className={`absolute top-0 left-0 w-1.5 h-full transition-colors duration-500 ${barber.isActive ? 'bg-primary' : 'bg-on-surface-variant/20'}`}></div>
+      
+      <div className="flex justify-between items-start mb-10">
         <div className="relative">
-          <div className="w-24 h-24 rounded-lg bg-surface-container-high flex items-center justify-center shadow-md">
-            <span className="material-symbols-outlined text-[48px] text-primary/30" style={{ fontVariationSettings: "'FILL' 1" }}>
+          <div className="w-20 h-20 rounded-md bg-surface-container-high flex items-center justify-center shadow-technical group-hover:scale-110 transition-transform duration-700">
+            <span className="material-symbols-outlined text-[40px] text-primary/20 group-hover:text-primary transition-colors duration-500">
               person
             </span>
           </div>
-          <span className={`absolute -bottom-2 -right-2 border text-[10px] font-bold px-2 py-0.5 rounded-full uppercase ${
-            barber.isActive
-              ? 'bg-primary/10 text-primary border-primary/20'
-              : 'bg-surface-variant text-outline border-outline-variant/30'
-          }`}>
-            {barber.isActive ? 'Active' : 'Inactive'}
-          </span>
+          <div className={`absolute -top-2 -right-2 w-4 h-4 rounded-full border-2 border-surface-container-low ${barber.isActive ? 'bg-primary shadow-[0_0_8px_var(--color-primary)]' : 'bg-on-surface-variant/20'}`}></div>
+        </div>
+        <div className="text-right">
+           <p className="text-[9px] font-label-md uppercase tracking-[0.2em] text-on-surface-variant opacity-40 mb-1">Status</p>
+           <p className={`text-[10px] font-bold uppercase tracking-widest ${barber.isActive ? 'text-primary' : 'text-on-surface-variant/40'}`}>
+              {barber.isActive ? 'Active' : 'Inactive'}
+           </p>
         </div>
       </div>
 
-      <div className="space-y-1">
-        <h3 className="font-headline-md text-on-surface">{barber.name ?? 'Unnamed'}</h3>
-        <p className="font-body-md text-on-surface-variant italic">Staff Member</p>
+      <div className="space-y-2">
+        <h3 className="font-display-lg text-2xl text-on-surface tracking-tighter lowercase">{barber.name ?? 'Unnamed'}</h3>
+        <p className="text-[10px] font-label-md text-on-surface-variant uppercase tracking-[0.3em] opacity-40">Studio Artisan</p>
       </div>
 
-      <div className="pt-4 border-t border-outline-variant/30 mt-auto flex gap-3">
+      <div className="pt-8 border-t border-outline-variant/10 mt-10 flex gap-4">
         <button
           id={`edit-staff-${barber.id}`}
           onClick={onEdit}
-          className="flex-1 font-label-md py-2 border border-outline text-on-surface-variant rounded-lg hover:bg-surface-container transition-colors flex items-center justify-center gap-1.5"
+          className="flex-1 font-label-md py-3 bg-surface-container-high text-on-surface-variant rounded-md hover:bg-surface-container-highest transition-all uppercase tracking-[0.2em] text-[9px] active:scale-95"
         >
-          <span className="material-symbols-outlined text-[16px]">edit</span>
-          Edit
+          Manage
         </button>
         <button
           id={`deactivate-staff-${barber.id}`}
           onClick={onDeactivate}
           title={barber.isActive ? 'Deactivate' : 'Activate'}
-          className={`px-3 py-2 border rounded-lg transition-colors ${
+          className={`px-4 py-3 rounded-md transition-all active:scale-90 ${
             barber.isActive
-              ? 'border-outline text-on-surface-variant hover:bg-surface-container'
-              : 'border-primary/30 text-primary hover:bg-primary/10'
+              ? 'bg-surface-container-high text-on-surface-variant opacity-40 hover:opacity-100'
+              : 'bg-primary/10 text-primary shadow-technical'
           }`}
         >
           <span className="material-symbols-outlined text-[18px]">
-            {barber.isActive ? 'person_off' : 'person'}
+            {barber.isActive ? 'person_off' : 'verified_user'}
           </span>
         </button>
       </div>
@@ -351,18 +353,21 @@ export default function StaffPage() {
     <ErrorBoundary>
       <main className="px-4 md:px-margin-desktop max-w-7xl mx-auto min-h-screen">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-stack-lg gap-4">
-          <div className="space-y-1">
-            <span className="font-label-md text-primary uppercase tracking-widest block">Team Management</span>
-            <h2 className="font-headline-lg text-on-surface">Master Barbers</h2>
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-10 mt-12">
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <span className="w-1.5 h-1.5 bg-primary rounded-full"></span>
+              <span className="font-label-md text-on-surface-variant uppercase tracking-[0.3em] text-[10px] opacity-40">Talent Acquisition</span>
+            </div>
+            <h2 className="font-display-lg text-display-lg text-on-surface tracking-tighter lowercase">master <span className="text-primary">artisans</span></h2>
           </div>
           <button
             id="add-staff-btn"
             onClick={() => setModal('create')}
-            className="flex items-center gap-2 px-6 py-3 bg-primary-container text-on-primary-container font-label-md rounded-lg shadow-sm hover:brightness-110 transition-all"
+            className="flex items-center gap-4 px-10 py-5 bg-primary text-on-primary font-label-md rounded-md shadow-technical hover:opacity-90 transition-all uppercase tracking-[0.2em] text-[11px] active:scale-95"
           >
-            <span className="material-symbols-outlined">person_add</span>
-            ADD NEW STAFF
+            <span className="material-symbols-outlined text-[20px]">person_add</span>
+            recruit new talent
           </button>
         </div>
 

@@ -36,92 +36,76 @@ function ServiceModal({
   }
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-end md:items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-      <div className="w-full max-w-md bg-surface-container-lowest rounded-2xl shadow-2xl p-6 space-y-5
-        border border-outline-variant/30">
-        <div className="flex items-center justify-between">
-          <h2 className="font-headline-md text-on-surface">
-            {initial ? 'Edit Service' : 'New Service'}
-          </h2>
-          <button onClick={onClose} className="text-outline hover:text-on-surface transition-colors">
-            <span className="material-symbols-outlined">close</span>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-8 bg-black/80 backdrop-blur-sm">
+      <div className="absolute inset-0" onClick={onClose} />
+      <div className="relative w-full max-w-xl bg-surface-container-low rounded-lg shadow-technical border border-white/5 overflow-hidden">
+        <div className="px-10 py-8 border-b border-outline-variant/10 flex justify-between items-center bg-surface-container-high/20">
+          <div className="space-y-1">
+            <div className="flex items-center gap-3">
+              <span className="w-1.5 h-1.5 bg-primary rounded-full"></span>
+              <span className="text-[9px] font-label-md text-on-surface-variant uppercase tracking-[0.3em] opacity-40">Protocol Definition</span>
+            </div>
+            <h3 className="font-display-lg text-3xl text-on-surface tracking-tighter lowercase">
+              {initial ? 'modify sequence' : 'initialize sequence'}
+            </h3>
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            className="text-on-surface-variant opacity-40 hover:opacity-100 transition-all"
+          >
+            <span className="material-symbols-outlined text-[24px]">close</span>
           </button>
         </div>
 
-        <div className="space-y-4">
-          <label className="block">
-            <span className="font-label-sm text-tertiary uppercase tracking-wider block mb-1">
-              Service Name
-            </span>
+        <div className="p-10 space-y-10">
+          <div className="space-y-3">
+            <label className="text-[10px] font-label-md text-on-surface-variant uppercase tracking-[0.2em] opacity-40 block ml-1">service identifier</label>
             <input
-              id="svc-name"
               type="text"
               value={values.name}
               onChange={(e) => set('name', e.target.value)}
-              placeholder="e.g. Classic Haircut"
-              className="w-full px-4 py-3 rounded-lg bg-surface-container border border-outline-variant
-                text-on-surface font-body-md focus:outline-none focus:ring-2 focus:ring-primary-container
-                transition-all placeholder:text-outline"
+              placeholder="e.g. precise contouring"
+              className="w-full bg-surface-container-high/50 border border-white/5 rounded-sm px-6 py-4 text-on-surface font-display-lg text-xl tracking-tighter placeholder:text-on-surface/20 focus:bg-surface-container-high transition-all outline-none"
             />
-          </label>
+          </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <label className="block">
-              <span className="font-label-sm text-tertiary uppercase tracking-wider block mb-1">
-                Duration (min)
-              </span>
+          <div className="grid grid-cols-2 gap-8">
+            <div className="space-y-3">
+              <label className="text-[10px] font-label-md text-on-surface-variant uppercase tracking-[0.2em] opacity-40 block ml-1">temporal scope (min)</label>
               <input
-                id="svc-duration"
                 type="number"
-                min={5}
-                max={480}
-                step={5}
                 value={values.durationMinutes}
                 onChange={(e) => set('durationMinutes', e.target.value)}
-                className="w-full px-4 py-3 rounded-lg bg-surface-container border border-outline-variant
-                  text-on-surface font-body-md focus:outline-none focus:ring-2 focus:ring-primary-container
-                  transition-all"
+                className="w-full bg-surface-container-high/50 border border-white/5 rounded-sm px-6 py-4 text-on-surface font-display-lg text-xl tracking-tighter focus:bg-surface-container-high transition-all outline-none"
               />
-            </label>
-            <label className="block">
-              <span className="font-label-sm text-tertiary uppercase tracking-wider block mb-1">
-                Price (₹)
-              </span>
+            </div>
+            <div className="space-y-3">
+              <label className="text-[10px] font-label-md text-on-surface-variant uppercase tracking-[0.2em] opacity-40 block ml-1">valuation (₹)</label>
               <input
-                id="svc-price"
                 type="number"
-                min={0}
-                step={0.5}
                 value={values.price}
                 onChange={(e) => set('price', e.target.value)}
-                className="w-full px-4 py-3 rounded-lg bg-surface-container border border-outline-variant
-                  text-on-surface font-body-md focus:outline-none focus:ring-2 focus:ring-primary-container
-                  transition-all"
+                className="w-full bg-surface-container-high/50 border border-white/5 rounded-sm px-6 py-4 text-on-surface font-display-lg text-xl tracking-tighter text-primary focus:bg-surface-container-high transition-all outline-none"
               />
-            </label>
+            </div>
           </div>
         </div>
 
-        <div className="flex gap-3 pt-2">
+        <div className="p-10 bg-surface-container-high/10 border-t border-outline-variant/10 flex gap-4">
           <button
             onClick={onClose}
-            className="flex-1 py-3 border border-outline-variant rounded-lg font-label-md
-              text-on-surface-variant hover:bg-surface-container transition-colors"
+            className="flex-1 py-5 rounded-sm font-label-md uppercase tracking-[0.2em] text-[11px] text-on-surface-variant opacity-40 hover:opacity-100 transition-all"
           >
-            Cancel
+            abort
           </button>
           <button
-            id="svc-save"
             disabled={loading || !values.name || !values.price}
             onClick={() => onSave(values)}
-            className="flex-1 py-3 bg-primary-container text-on-primary-container rounded-lg
-              font-label-md hover:brightness-110 transition-all disabled:opacity-50
-              disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="flex-1 py-5 bg-primary text-on-primary rounded-sm shadow-technical font-label-md uppercase tracking-[0.2em] text-[11px] hover:opacity-90 transition-all disabled:opacity-20 active:scale-95 flex items-center justify-center gap-3"
           >
-            {loading && <span className="w-4 h-4 border-2 border-on-primary-container/30
-              border-t-on-primary-container rounded-full animate-spin" />}
-            {initial ? 'Save Changes' : 'Create Service'}
+            {loading && <span className="w-4 h-4 border-2 border-on-primary/30 border-t-on-primary rounded-full animate-spin" />}
+            {initial ? 'commit changes' : 'execute initialization'}
           </button>
         </div>
       </div>
@@ -143,7 +127,7 @@ function ConfirmDialog({
   loading: boolean;
 }) {
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60">
       <div className="w-full max-w-sm bg-surface-container-lowest rounded-2xl shadow-2xl p-6 space-y-4
         border border-outline-variant/30">
         <div className="flex items-center gap-3">
@@ -193,62 +177,55 @@ function ServiceCard({
   onDelete: () => void;
 }) {
   return (
-    <div className={`bg-surface-container-lowest rounded-xl p-6 border flex flex-col gap-4
-      shadow-md shadow-black/5 transition-all hover:shadow-lg group
-      ${service.isActive === false ? 'border-outline-variant/20 opacity-60' : 'border-outline-variant/30'}`}>
+    <div className={`bg-surface-container-low rounded-lg p-8 border border-white/5 flex flex-col gap-6
+      shadow-technical transition-all hover:bg-surface-container-high group
+      ${service.isActive === false ? 'opacity-40 grayscale' : ''}`}>
       <div className="flex items-start justify-between">
-        <div className="p-2.5 bg-surface-container rounded-lg">
-          <span className="material-symbols-outlined text-primary-container text-[24px]">
+        <div className="w-12 h-12 rounded-md bg-surface-container-high flex items-center justify-center shadow-inner group-hover:bg-primary group-hover:text-on-primary transition-all duration-500">
+          <span className="material-symbols-outlined text-[20px]">
             content_cut
           </span>
         </div>
-        <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-widest uppercase
+        <div className={`px-4 py-1 rounded-sm text-[9px] font-label-md uppercase tracking-[0.2em] border
           ${service.isActive === false
-            ? 'bg-surface-variant text-outline'
-            : 'bg-primary/10 text-primary'}`}>
-          {service.isActive === false ? 'Inactive' : 'Active'}
-        </span>
+            ? 'border-on-surface-variant/20 text-on-surface-variant opacity-40'
+            : 'border-primary/20 text-primary bg-primary/5'}`}>
+          {service.isActive === false ? 'off-line' : 'operational'}
+        </div>
       </div>
 
-      <div>
-        <h3 className="font-headline-sm text-on-surface">{service.name}</h3>
-        <div className="flex items-center gap-3 mt-2">
-          <span className="flex items-center gap-1 font-label-sm text-tertiary">
-            <span className="material-symbols-outlined text-[16px]">schedule</span>
+      <div className="space-y-2">
+        <h3 className="font-display-lg text-2xl text-on-surface lowercase tracking-tighter leading-tight group-hover:text-primary transition-colors">{service.name}</h3>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 text-[10px] font-label-md text-on-surface-variant uppercase tracking-[0.2em] opacity-40">
+            <span className="material-symbols-outlined text-[14px]">schedule</span>
             {service.durationMinutes} min
-          </span>
-          <span className="text-outline-variant">·</span>
-          <span className="font-label-md text-primary font-semibold">
-            ₹{service.price.toLocaleString('en-IN')}
+          </div>
+          <span className="w-1 h-1 bg-on-surface-variant rounded-full opacity-10"></span>
+          <span className="font-display-lg text-xl text-primary tracking-tighter">
+            ₹{service.price.toFixed(0)}
           </span>
         </div>
       </div>
 
-      <div className="flex gap-2 mt-auto pt-4 border-t border-outline-variant/30">
+      <div className="flex gap-3 mt-auto pt-6 border-t border-outline-variant/10">
         <button
-          id={`edit-svc-${service.id}`}
           onClick={onEdit}
-          className="flex-1 py-2 border border-outline-variant text-on-surface-variant rounded-lg
-            font-label-sm hover:bg-surface-container transition-colors flex items-center justify-center gap-1.5"
+          className="flex-1 py-3 bg-surface-container-high rounded-sm text-[10px] font-label-md uppercase tracking-[0.2em] text-on-surface-variant hover:text-on-surface transition-all active:scale-95"
         >
-          <span className="material-symbols-outlined text-[16px]">edit</span>
-          Edit
+          Modify
         </button>
         <button
-          id={`toggle-svc-${service.id}`}
           onClick={onToggle}
-          title={service.isActive === false ? 'Activate' : 'Deactivate'}
-          className="px-3 py-2 border border-outline-variant text-on-surface-variant rounded-lg
-            hover:bg-surface-container transition-colors"
+          className="w-12 h-10 flex items-center justify-center rounded-sm bg-surface-container-high text-on-surface-variant opacity-40 hover:opacity-100 transition-all active:scale-90"
         >
           <span className="material-symbols-outlined text-[18px]">
             {service.isActive === false ? 'visibility' : 'visibility_off'}
           </span>
         </button>
         <button
-          id={`delete-svc-${service.id}`}
           onClick={onDelete}
-          className="px-3 py-2 border border-error/30 text-error rounded-lg hover:bg-error/10 transition-colors"
+          className="w-12 h-10 flex items-center justify-center rounded-sm bg-error/5 text-error opacity-40 hover:opacity-100 transition-all active:scale-90"
         >
           <span className="material-symbols-outlined text-[18px]">delete</span>
         </button>
@@ -351,25 +328,25 @@ export default function ServicesPage() {
 
   return (
     <ErrorBoundary>
-      <main className="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto min-h-screen">
+      <main className="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto min-h-screen pb-24">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-stack-lg gap-4">
-          <div className="space-y-1">
-            <span className="font-label-md text-primary tracking-widest uppercase block">
-              Service Catalogue
-            </span>
-            <h2 className="font-headline-lg text-on-surface">Manage Services</h2>
+        <section className="mb-24 flex flex-col md:flex-row md:items-end justify-between gap-10 mt-12">
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+               <span className="w-1.5 h-1.5 bg-primary rounded-full"></span>
+               <span className="font-label-md text-on-surface-variant uppercase tracking-[0.3em] text-[10px] opacity-40">Artisan Assets</span>
+            </div>
+            <h2 className="font-display-lg text-display-lg text-on-surface tracking-tighter lowercase">service <span className="text-primary">catalogue</span></h2>
+            <p className="text-[10px] font-label-md text-on-surface-variant uppercase tracking-[0.2em] opacity-40">Managing {services.length} operational definitions</p>
           </div>
           <button
-            id="create-service-btn"
             onClick={() => setModal('create')}
-            className="flex items-center gap-2 px-6 py-3 bg-primary-container text-on-primary-container
-              font-label-md rounded-lg shadow-md hover:brightness-110 transition-all"
+            className="px-10 py-5 bg-primary text-on-primary rounded-md shadow-technical font-label-md uppercase tracking-[0.2em] text-[11px] hover:opacity-90 transition-all flex items-center gap-3 active:scale-95"
           >
-            <span className="material-symbols-outlined">add</span>
-            NEW SERVICE
+            <span className="material-symbols-outlined text-[20px]">add</span>
+            initialize new sequence
           </button>
-        </div>
+        </section>
 
         {/* Error Banner */}
         {error && (

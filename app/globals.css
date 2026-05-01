@@ -4,35 +4,35 @@
    SELOR — Design Tokens (Light Mode Default)
    ============================================ */
 :root {
-  /* Primary */
-  --color-primary: #735c00;
+  /* Primary (Technical Blue) */
+  --color-primary: #003ca1;
   --color-on-primary: #ffffff;
-  --color-primary-container: #d4af37;
-  --color-on-primary-container: #554300;
-  --color-primary-fixed: #ffe088;
-  --color-primary-fixed-dim: #e9c349;
-  --color-on-primary-fixed: #241a00;
-  --color-on-primary-fixed-variant: #574500;
+  --color-primary-container: #0051d3;
+  --color-on-primary-container: #c7d3ff;
+  --color-primary-fixed: #dbe1ff;
+  --color-primary-fixed-dim: #b3c5ff;
+  --color-on-primary-fixed: #00174a;
+  --color-on-primary-fixed-variant: #003ea6;
 
-  /* Secondary */
-  --color-secondary: #5f5e5c;
+  /* Secondary (Muted Blue) */
+  --color-secondary: #4b5c91;
   --color-on-secondary: #ffffff;
-  --color-secondary-container: #e5e2de;
-  --color-on-secondary-container: #656461;
-  --color-secondary-fixed: #e5e2de;
-  --color-secondary-fixed-dim: #c9c6c3;
-  --color-on-secondary-fixed: #1c1c1a;
-  --color-on-secondary-fixed-variant: #474744;
+  --color-secondary-container: #b1c2fd;
+  --color-on-secondary-container: #3d4e82;
+  --color-secondary-fixed: #dbe1ff;
+  --color-secondary-fixed-dim: #b4c5ff;
+  --color-on-secondary-fixed: #01174a;
+  --color-on-secondary-fixed-variant: #334477;
 
-  /* Tertiary */
-  --color-tertiary: #5f5e5b;
+  /* Tertiary (Burnt Orange) */
+  --color-tertiary: #7e2500;
   --color-on-tertiary: #ffffff;
-  --color-tertiary-container: #b5b3af;
-  --color-on-tertiary-container: #464543;
-  --color-tertiary-fixed: #e5e2de;
-  --color-tertiary-fixed-dim: #c8c6c2;
-  --color-on-tertiary-fixed: #1c1c1a;
-  --color-on-tertiary-fixed-variant: #474744;
+  --color-tertiary-container: #a63400;
+  --color-on-tertiary-container: #ffc8b6;
+  --color-tertiary-fixed: #ffdbcf;
+  --color-tertiary-fixed-dim: #ffb59c;
+  --color-on-tertiary-fixed: #390c00;
+  --color-on-tertiary-fixed-variant: #832700;
 
   /* Error */
   --color-error: #ba1a1a;
@@ -40,149 +40,156 @@
   --color-error-container: #ffdad6;
   --color-on-error-container: #93000a;
 
-  /* Surfaces */
-  --color-background: #fff8f0;
-  --color-on-background: #1f1b13;
-  --color-surface: #fff8f0;
-  --color-on-surface: #1f1b13;
-  --color-surface-variant: #eae1d4;
-  --color-on-surface-variant: #4d4635;
-  --color-surface-dim: #e1d9cc;
-  --color-surface-bright: #fff8f0;
+  /* Surfaces (Ivory) */
+  --color-background: #faf8ff;
+  --color-on-background: #191b23;
+  --color-surface: #faf8ff;
+  --color-on-surface: #191b23;
+  --color-surface-variant: #e2e1ed;
+  --color-on-surface-variant: #434654;
+  --color-surface-dim: #d9d9e4;
+  --color-surface-bright: #faf8ff;
   --color-surface-container-lowest: #ffffff;
-  --color-surface-container-low: #fbf3e5;
-  --color-surface-container: #f5eddf;
-  --color-surface-container-high: #efe7da;
-  --color-surface-container-highest: #eae1d4;
-  --color-surface-tint: #735c00;
+  --color-surface-container-low: #f3f2fe;
+  --color-surface-container: #ededf8;
+  --color-surface-container-high: #e7e7f3;
+  --color-surface-container-highest: #e2e1ed;
+  --color-surface-tint: #0a54d5;
 
   /* Outline */
-  --color-outline: #7f7663;
-  --color-outline-variant: #d0c5af;
+  --color-outline: #737686;
+  --color-outline-variant: #c3c6d7;
 
   /* Inverse */
-  --color-inverse-surface: #343027;
-  --color-inverse-on-surface: #f8f0e2;
-  --color-inverse-primary: #e9c349;
+  --color-inverse-surface: #2e3039;
+  --color-inverse-on-surface: #f0f0fb;
+  --color-inverse-primary: #b3c5ff;
 }
 
 @theme inline {
-  /* Radii */
+  /* Radii - Soft Shape Language */
+  --radius-sm: 0.125rem;
   --radius-DEFAULT: 0.25rem;
-  --radius-lg: 1rem;
-  --radius-xl: 1.5rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
   --radius-full: 9999px;
 
-  /* Spacing */
-  --spacing-margin-desktop: 64px;
-  --spacing-gutter: 24px;
-  --spacing-section-gap: 80px;
-  --spacing-stack-lg: 32px;
-  --spacing-stack-sm: 8px;
-  --spacing-margin-mobile: 16px;
+  /* Spacing - 8px Grid */
   --spacing-unit: 8px;
+  --spacing-container-margin: 24px;
+  --spacing-gutter: 16px;
+  --spacing-stack-sm: 8px;
   --spacing-stack-md: 16px;
-  --spacing-container-max: 1280px;
+  --spacing-stack-lg: 32px;
+  --spacing-section-padding: 64px;
+  
+  /* Legacy mapping support */
+  --spacing-margin-desktop: 64px;
+  --spacing-margin-mobile: 16px;
+  --spacing-section-gap: 80px;
 
   /* Typography */
-  --font-manrope: "Avenir Next", Avenir, "Segoe UI", sans-serif;
-  --font-body-lg: var(--font-manrope);
-  --font-display-lg: var(--font-manrope);
-  --font-headline-lg: var(--font-manrope);
-  --font-body-md: var(--font-manrope);
-  --font-label-sm: var(--font-manrope);
-  --font-label-md: var(--font-manrope);
-  --font-headline-md: var(--font-manrope);
+  --font-serif: "Noto Serif", serif;
+  --font-sans: "Inter", sans-serif;
+  
+  /* Semantic Font Mappings */
+  --font-display-lg: var(--font-serif);
+  --font-headline-lg: var(--font-serif);
+  --font-headline-md: var(--font-serif);
+  --font-body-lg: var(--font-sans);
+  --font-body-md: var(--font-sans);
+  --font-label-md: var(--font-sans);
 
-  --text-body-lg: 18px;
-  --text-body-lg--line-height: 1.6;
-  --text-body-lg--font-weight: 400;
-
-  --text-display-lg: 48px;
-  --text-display-lg--line-height: 1.1;
-  --text-display-lg--letter-spacing: -0.02em;
+  --text-display-lg: 64px;
+  --text-display-lg--line-height: 72px;
   --text-display-lg--font-weight: 700;
+  --text-display-lg--letter-spacing: -0.04em;
 
   --text-headline-lg: 32px;
-  --text-headline-lg--line-height: 1.2;
-  --text-headline-lg--letter-spacing: -0.01em;
+  --text-headline-lg--line-height: 40px;
   --text-headline-lg--font-weight: 600;
-
-  --text-body-md: 16px;
-  --text-body-md--line-height: 1.6;
-  --text-body-md--font-weight: 400;
-
-  --text-label-sm: 12px;
-  --text-label-sm--line-height: 1.2;
-  --text-label-sm--font-weight: 500;
-
-  --text-label-md: 14px;
-  --text-label-md--line-height: 1.2;
-  --text-label-md--letter-spacing: 0.05em;
-  --text-label-md--font-weight: 600;
+  --text-headline-lg--letter-spacing: -0.02em;
 
   --text-headline-md: 24px;
-  --text-headline-md--line-height: 1.3;
+  --text-headline-md--line-height: 32px;
   --text-headline-md--font-weight: 600;
+  --text-headline-md--letter-spacing: -0.01em;
+
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 28px;
+  --text-body-lg--font-weight: 400;
+
+  --text-body-md: 16px;
+  --text-body-md--line-height: 24px;
+  --text-body-md--font-weight: 400;
+
+  --text-label-md: 12px;
+  --text-label-md--line-height: 16px;
+  --text-label-md--font-weight: 700;
+  --text-label-md--letter-spacing: 0.15em;
+}
+
+@utility technical-grid {
+  background-image: radial-gradient(var(--color-outline-variant) 0.5px, transparent 0.5px);
+  background-size: 24px 24px;
+  background-position: center;
+  opacity: 0.15;
+}
+
+@utility shadow-technical {
+  box-shadow: 0 30px 60px -12px rgba(0, 60, 161, 0.12);
+}
+
+@utility border-subtle {
+  border: 1px solid color-mix(in srgb, var(--color-outline-variant), transparent 85%);
 }
 
 /* ============================================
-   DARK MODE — overrides via .dark class
+   DARK MODE — Derived from Technical Palette
    ============================================ */
 .dark {
-  --color-primary: #e9c349;
-  --color-on-primary: #3c2f00;
-  --color-primary-container: #a88a2a;
-  --color-on-primary-container: #ffe088;
-  --color-primary-fixed: #ffe088;
-  --color-primary-fixed-dim: #e9c349;
-  --color-on-primary-fixed: #241a00;
-  --color-on-primary-fixed-variant: #574500;
+  --color-primary: #b3c5ff;
+  --color-on-primary: #002970;
+  --color-primary-container: #003ca1;
+  --color-on-primary-container: #dbe1ff;
 
-  --color-secondary: #c9c6c3;
-  --color-on-secondary: #31312f;
-  --color-secondary-container: #484845;
-  --color-on-secondary-container: #e5e2de;
-  --color-secondary-fixed: #e5e2de;
-  --color-secondary-fixed-dim: #c9c6c3;
-  --color-on-secondary-fixed: #1c1c1a;
-  --color-on-secondary-fixed-variant: #474744;
+  --color-secondary: #b4c5ff;
+  --color-on-secondary: #1a2e60;
+  --color-secondary-container: #334477;
+  --color-on-secondary-container: #dbe1ff;
 
-  --color-tertiary: #c8c6c2;
-  --color-on-tertiary: #30302e;
-  --color-tertiary-container: #8d8b87;
-  --color-on-tertiary-container: #e5e2de;
-  --color-tertiary-fixed: #e5e2de;
-  --color-tertiary-fixed-dim: #c8c6c2;
-  --color-on-tertiary-fixed: #1c1c1a;
-  --color-on-tertiary-fixed-variant: #474744;
+  --color-tertiary: #ffb59c;
+  --color-on-tertiary: #5e1700;
+  --color-tertiary-container: #832700;
+  --color-on-tertiary-container: #ffdbcf;
 
   --color-error: #ffb4ab;
   --color-on-error: #690005;
   --color-error-container: #93000a;
   --color-on-error-container: #ffdad6;
 
-  --color-background: #16130b;
-  --color-on-background: #eae1d4;
-  --color-surface: #16130b;
-  --color-on-surface: #eae1d4;
-  --color-surface-variant: #4d4635;
-  --color-on-surface-variant: #d0c5af;
-  --color-surface-dim: #16130b;
-  --color-surface-bright: #3d3930;
-  --color-surface-container-lowest: #110e07;
-  --color-surface-container-low: #1f1b13;
-  --color-surface-container: #232017;
-  --color-surface-container-high: #2e2a21;
-  --color-surface-container-highest: #39352c;
-  --color-surface-tint: #e9c349;
+  --color-background: #191b23;
+  --color-on-background: #e2e1ed;
+  --color-surface: #191b23;
+  --color-on-surface: #e2e1ed;
+  --color-surface-variant: #434654;
+  --color-on-surface-variant: #c3c6d7;
+  --color-surface-dim: #111318;
+  --color-surface-bright: #38393f;
+  --color-surface-container-lowest: #0c0e13;
+  --color-surface-container-low: #1c1e26;
+  --color-surface-container: #21232b;
+  --color-surface-container-high: #2b2d36;
+  --color-surface-container-highest: #363841;
+  --color-surface-tint: #b3c5ff;
 
-  --color-outline: #989080;
-  --color-outline-variant: #4d4635;
+  --color-outline: #8d90a0;
+  --color-outline-variant: #434654;
 
-  --color-inverse-surface: #eae1d4;
-  --color-inverse-on-surface: #343027;
-  --color-inverse-primary: #735c00;
+  --color-inverse-surface: #e2e1ed;
+  --color-inverse-on-surface: #191b23;
+  --color-inverse-primary: #003ca1;
 }
 
 /* Material Symbols */
@@ -196,6 +203,21 @@ body {
   color: var(--color-on-surface);
   min-height: 100dvh;
   transition: background-color 0.3s ease, color 0.3s ease;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  @apply technical-grid;
+  pointer-events: none;
+  z-index: 0;
+}
+
+main, nav {
+  position: relative;
+  z-index: 1;
 }
 
 .bento-grid {

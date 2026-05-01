@@ -29,8 +29,14 @@ export default function BookingConfirmPage() {
   const totalPrice = getTotalPrice();
   const totalDuration = getTotalDuration();
   const selectedBarber = getSelectedBarber();
+  const selectedSlotStartTime = selectedSlot?.startTime ?? null;
+  const formattedSelectedDate = selectedDate ? format(parseISO(selectedDate), 'dd MMM yyyy') : null;
+  const formattedSelectedDateCompact = selectedDate ? format(parseISO(selectedDate), 'dd-MM-yyyy') : null;
+  const formattedSelectedTime = selectedSlotStartTime
+    ? new Date(selectedSlotStartTime).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })
+    : null;
 
-  const isReady = selectedServiceIds.length > 0 && selectedBarberId && selectedSlot;
+  const isReady = selectedServiceIds.length > 0 && !!selectedBarberId && !!selectedSlotStartTime;
 
   const handleConfirm = async () => {
     if (!isReady) return;
@@ -49,8 +55,8 @@ export default function BookingConfirmPage() {
         body: JSON.stringify({
           barberId: selectedBarberId,
           serviceIds: selectedServiceIds,
-          startTime: selectedSlot!.startTime,
-          idempotencyKey: `${user.id}-${selectedBarberId}-${selectedSlot!.startTime}`,
+          startTime: selectedSlotStartTime,
+          idempotencyKey: `${user.id}-${selectedBarberId}-${selectedSlotStartTime}`,
         }),
       });
 
@@ -72,42 +78,58 @@ export default function BookingConfirmPage() {
   // ── Success Screen ──────────────────────────────────────────────────────────
   if (confirmed) {
     return (
-      <main className="max-w-2xl mx-auto px-margin-mobile md:px-0 py-stack-lg min-h-screen flex flex-col items-center justify-center text-center gap-6">
-        <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center">
-          <span className="material-symbols-outlined text-primary text-[56px]" style={{ fontVariationSettings: "'FILL' 1" }}>
-            check_circle
+      <main className="max-w-2xl mx-auto px-margin-mobile md:px-0 py-section-padding min-h-screen flex flex-col items-center justify-center text-center gap-12">
+        <div className="w-40 h-40 rounded-full bg-primary/5 flex items-center justify-center border border-primary/10 shadow-technical relative">
+           <div className="absolute inset-0 bg-primary/5 rounded-full animate-ping opacity-20"></div>
+          <span className="material-symbols-outlined text-primary text-[72px] relative z-10" style={{ fontVariationSettings: "'FILL' 1" }}>
+            verified
           </span>
         </div>
-        <h1 className="font-headline-lg text-on-surface">Booking Confirmed!</h1>
-        <p className="text-tertiary font-body-md max-w-sm">
-          Your appointment has been booked. You&apos;ll receive a reminder before your session.
-        </p>
-        <div className="bg-surface-container-lowest rounded-xl p-6 w-full text-left border border-outline-variant/30">
-          <p className="font-label-sm text-tertiary uppercase tracking-widest mb-3">Booking Summary</p>
-          <p className="font-headline-md text-on-surface">{selectedServices.map((s) => s.name).join(' + ')}</p>
-          <p className="text-secondary mt-1">
-            {format(parseISO(selectedDate), 'dd MMM yyyy')} ·{' '}
-            {new Date(selectedSlot!.startTime).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })} IST
+        <div>
+          <h1 className="font-display-lg text-display-lg text-on-surface mb-4 tracking-tighter lowercase">ritual <span className="text-primary">secured</span></h1>
+          <p className="text-on-surface-variant font-body-lg opacity-60 max-w-sm mx-auto leading-relaxed">
+            Your orchestration is complete. We have integrated your session into our master schedule.
           </p>
-          {selectedBarber && (
-            <p className="text-secondary">with {selectedBarber.name}</p>
-          )}
-          <p className="font-label-md text-primary mt-3">₹{totalPrice.toFixed(2)} · {totalDuration} min</p>
         </div>
-        <div className="flex gap-4 w-full">
+        <div className="bg-surface-container-low rounded-lg p-12 w-full text-left shadow-technical relative overflow-hidden group">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full group-hover:scale-110 transition-transform duration-700"></div>
+          <p className="font-label-md text-primary uppercase tracking-[0.3em] mb-8 font-bold text-[10px]">Session Manifest</p>
+          <h2 className="font-display-lg text-on-surface text-3xl mb-4 tracking-tight lowercase">
+             {selectedServices.map((s) => s.name).join(' + ')}
+          </h2>
+          {(formattedSelectedDate || formattedSelectedTime) && (
+            <div className="flex items-center gap-4 text-on-surface-variant font-display-lg text-xl mb-10 opacity-70">
+              <span>{formattedSelectedDate}</span>
+              <span className="w-1 h-1 bg-primary rounded-full"></span>
+              <span>{formattedSelectedTime} IST</span>
+            </div>
+          )}
+          {selectedBarber && (
+            <div className="flex items-center gap-6 pt-8 border-t border-outline-variant/30">
+               <div className="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center text-primary">
+                  <span className="material-symbols-outlined">person</span>
+               </div>
+               <div>
+                  <p className="text-[10px] font-label-md uppercase tracking-[0.2em] opacity-40">Artisan assigned</p>
+                  <p className="text-on-surface font-display-lg text-xl leading-none">{selectedBarber.name}</p>
+               </div>
+            </div>
+          )}
+        </div>
+        <div className="flex flex-col md:flex-row gap-6 w-full">
           <Link
             href="/dashboard"
             onClick={reset}
-            className="flex-1 py-4 bg-primary-container text-on-primary-container font-label-md rounded-lg text-center hover:brightness-110 transition-all uppercase tracking-wider"
+            className="flex-1 py-6 bg-primary text-on-primary font-label-md rounded-md text-center shadow-technical hover:opacity-90 transition-all uppercase tracking-[0.2em] active:scale-[0.98]"
           >
-            View Dashboard
+            return home
           </Link>
           <Link
             href="/book/service"
             onClick={reset}
-            className="flex-1 py-4 border border-outline-variant text-on-surface font-label-md rounded-lg text-center hover:bg-surface-container transition-all uppercase tracking-wider"
+            className="flex-1 py-6 bg-surface-container-low text-on-surface font-label-md rounded-md text-center hover:bg-surface-container-high transition-all uppercase tracking-[0.2em] active:scale-[0.98] shadow-technical"
           >
-            Book Again
+            new ritual
           </Link>
         </div>
       </main>
@@ -117,15 +139,19 @@ export default function BookingConfirmPage() {
   // ── Incomplete Selection Fallback ───────────────────────────────────────────
   if (!isReady) {
     return (
-      <main className="max-w-2xl mx-auto px-margin-mobile md:px-0 py-stack-lg min-h-screen flex flex-col items-center justify-center text-center gap-6">
-        <span className="material-symbols-outlined text-[64px] text-outline">calendar_today</span>
-        <h1 className="font-headline-lg text-on-surface">Nothing to Confirm Yet</h1>
-        <p className="text-tertiary">Please select a service and time slot first.</p>
+      <main className="max-w-2xl mx-auto px-margin-mobile md:px-0 py-section-padding min-h-screen flex flex-col items-center justify-center text-center gap-10">
+        <div className="w-24 h-24 rounded-full bg-surface-container flex items-center justify-center border border-outline-variant/30">
+          <span className="material-symbols-outlined text-[48px] text-on-surface-variant opacity-40">calendar_today</span>
+        </div>
+        <div>
+          <h1 className="font-display-lg text-display-lg text-on-surface mb-4 tracking-tight">Empty Selection</h1>
+          <p className="text-on-surface-variant font-body-lg opacity-70">Please complete your service and time selection to proceed with the booking.</p>
+        </div>
         <Link
           href="/book/service"
-          className="px-8 py-3 bg-primary-container text-on-primary-container rounded-lg font-label-md hover:brightness-110 transition-all"
+          className="px-12 py-5 bg-primary text-on-primary rounded-md font-label-md uppercase tracking-[0.2em] shadow-lg shadow-primary/20 hover:opacity-90 transition-all active:scale-[0.98]"
         >
-          Start Booking
+          Begin Selection
         </Link>
       </main>
     );
@@ -133,55 +159,59 @@ export default function BookingConfirmPage() {
 
   // ── Review Screen ───────────────────────────────────────────────────────────
   return (
-    <main className="max-w-2xl mx-auto px-margin-mobile md:px-0 py-stack-lg min-h-screen">
-      <header className="mb-stack-lg">
-        <h1 className="font-headline-lg text-headline-lg text-on-surface mb-2">Review Appointment</h1>
-        <p className="font-body-md text-body-md text-tertiary">Confirm your service details before booking.</p>
+    <main className="max-w-2xl mx-auto px-margin-mobile md:px-0 py-section-padding min-h-screen">
+      <header className="mb-16">
+        <h1 className="font-display-lg text-display-lg text-on-surface mb-4 tracking-tight">Review Appointment</h1>
+        <p className="font-body-lg text-on-surface-variant opacity-70">Please verify your session details before final confirmation.</p>
       </header>
 
-      <div className="space-y-stack-md">
+      <div className="space-y-8">
         {/* Services Summary */}
-        <section className="bg-surface-container-lowest rounded-lg p-6 shadow-md shadow-black/5 border border-outline-variant/30">
-          <div className="flex justify-between items-start mb-6">
+        <section className="bg-surface-container-low rounded-lg p-12 shadow-technical relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-2 h-full bg-primary"></div>
+          <div className="flex justify-between items-start mb-12">
             <div>
-              <h2 className="font-headline-md text-headline-md text-on-surface">
+              <p className="font-label-md text-primary uppercase tracking-[0.3em] text-[10px] mb-4 font-bold">Selected treatments</p>
+              <h2 className="font-display-lg text-4xl text-on-surface tracking-tighter lowercase">
                 {selectedServices.map((s) => s.name).join(' + ')}
               </h2>
-              <p className="text-tertiary font-label-sm mt-1 uppercase tracking-wider">
-                {totalDuration} mins · ₹{totalPrice.toFixed(2)}
-              </p>
+              <div className="flex items-center gap-4 mt-6">
+                 <p className="font-display-lg text-xl text-primary">{totalDuration}m</p>
+                 <span className="w-1 h-1 bg-outline-variant/30 rounded-full"></span>
+                 <p className="text-on-surface-variant font-display-lg text-xl opacity-60">₹{totalPrice.toFixed(0)}</p>
+              </div>
             </div>
-            <div className="w-14 h-14 rounded-lg bg-surface-container-high flex items-center justify-center">
-              <span className="material-symbols-outlined text-primary text-[28px]" style={{ fontVariationSettings: "'FILL' 1" }}>
-                content_cut
+            <div className="w-20 h-20 rounded-md bg-surface-container-high flex items-center justify-center text-primary/30">
+              <span className="material-symbols-outlined text-[40px]">
+                architecture
               </span>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-stack-md pt-6 border-t border-outline-variant/30">
-            <div className="flex items-start gap-3">
-              <span className="material-symbols-outlined text-primary-container">calendar_today</span>
+          <div className="grid grid-cols-2 gap-10 pt-12 border-t border-outline-variant/30">
+            <div className="flex items-start gap-5">
+              <span className="material-symbols-outlined text-primary/40 mt-1">calendar_today</span>
               <div>
-                <p className="font-label-sm text-tertiary uppercase tracking-wider">Date</p>
-                <p className="font-body-md text-on-surface font-semibold">
-                  {format(parseISO(selectedDate), 'dd-MM-yyyy')}
+                <p className="font-label-md text-on-surface-variant uppercase tracking-[0.2em] text-[9px] opacity-40 mb-2">Scheduled Date</p>
+                <p className="font-display-lg text-xl text-on-surface tracking-tight">
+                  {formattedSelectedDateCompact}
                 </p>
               </div>
             </div>
-            <div className="flex items-start gap-3">
-              <span className="material-symbols-outlined text-primary-container">schedule</span>
+            <div className="flex items-start gap-5">
+              <span className="material-symbols-outlined text-primary/40 mt-1">schedule</span>
               <div>
-                <p className="font-label-sm text-tertiary uppercase tracking-wider">Time</p>
-                <p className="font-body-md text-on-surface font-semibold">
-                  {new Date(selectedSlot!.startTime).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })} IST
+                <p className="font-label-md text-on-surface-variant uppercase tracking-[0.2em] text-[9px] opacity-40 mb-2">Window</p>
+                <p className="font-display-lg text-xl text-on-surface tracking-tight">
+                  {formattedSelectedTime} IST
                 </p>
               </div>
             </div>
             {selectedBarber && (
-              <div className="flex items-start gap-3 col-span-2">
-                <span className="material-symbols-outlined text-primary-container">person</span>
+              <div className="flex items-start gap-5 col-span-2 mt-4 pt-10 border-t border-outline-variant/30 border-dashed">
+                <span className="material-symbols-outlined text-primary/40 mt-1">person</span>
                 <div>
-                  <p className="font-label-sm text-tertiary uppercase tracking-wider">Professional</p>
-                  <p className="font-body-md text-on-surface font-semibold">{selectedBarber.name ?? 'Artisan'}</p>
+                  <p className="font-label-md text-on-surface-variant uppercase tracking-[0.2em] text-[9px] opacity-40 mb-2">Assigned Artisan</p>
+                  <p className="font-display-lg text-xl text-on-surface tracking-tight">{selectedBarber.name}</p>
                 </div>
               </div>
             )}
@@ -190,13 +220,14 @@ export default function BookingConfirmPage() {
 
         {/* Individual services breakdown */}
         {selectedServices.length > 1 && (
-          <section className="bg-surface-container-lowest rounded-lg p-6 shadow-md shadow-black/5 border border-outline-variant/30">
-            <h3 className="font-label-md text-label-md text-on-surface uppercase mb-4 tracking-widest">Services</h3>
-            <div className="space-y-3">
+          <section className="bg-surface-container rounded-lg p-10 border border-outline-variant/30">
+            <h3 className="font-label-md text-on-surface-variant uppercase mb-8 tracking-[0.2em] opacity-60">Services Breakdown</h3>
+            <div className="space-y-6">
               {selectedServices.map((s) => (
-                <div key={s.id} className="flex justify-between font-body-md text-tertiary">
-                  <span>{s.name} ({s.durationMinutes}m)</span>
-                  <span>₹{s.price.toFixed(2)}</span>
+                <div key={s.id} className="flex justify-between items-baseline group">
+                  <span className="font-body-lg text-on-surface opacity-80 group-hover:opacity-100 transition-opacity">{s.name} ({s.durationMinutes}m)</span>
+                  <div className="flex-1 border-b border-dotted border-outline-variant/50 mx-4 mb-1"></div>
+                  <span className="font-headline-md text-on-surface">₹{s.price.toFixed(2)}</span>
                 </div>
               ))}
             </div>
@@ -204,18 +235,19 @@ export default function BookingConfirmPage() {
         )}
 
         {/* Payment Summary */}
-        <section className="bg-surface-container-low rounded-lg p-6 border border-primary-container/10">
-          <h3 className="font-label-md text-label-md text-on-surface uppercase mb-4 tracking-widest">
-            Payment Summary
+        <section className="bg-primary text-on-primary rounded-lg p-12 shadow-technical relative overflow-hidden border border-white/5">
+           <div className="absolute inset-0 @apply technical-grid opacity-10"></div>
+          <h3 className="font-label-md uppercase mb-10 tracking-[0.3em] text-[10px] opacity-60">
+            Total Investment
           </h3>
-          <div className="space-y-3">
-            <div className="flex justify-between font-body-md text-tertiary">
-              <span>Service Subtotal</span>
+          <div className="space-y-6">
+            <div className="flex justify-between font-label-md uppercase tracking-[0.2em] text-[11px] opacity-50">
+              <span>Professional Fee</span>
               <span>₹{totalPrice.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between font-headline-md text-on-surface pt-3 border-t border-outline-variant/30">
-              <span>Total</span>
-              <span className="text-primary-container">₹{totalPrice.toFixed(2)}</span>
+            <div className="flex justify-between items-baseline pt-10 border-t border-white/10">
+              <span className="font-display-lg text-2xl tracking-tighter opacity-70">Final Amount</span>
+              <span className="font-display-lg text-5xl tracking-tighter drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]">₹{totalPrice.toFixed(0)}</span>
             </div>
           </div>
         </section>
@@ -237,22 +269,23 @@ export default function BookingConfirmPage() {
       </div>
 
       {/* Action */}
-      <footer className="mt-stack-lg flex flex-col gap-4">
+      <footer className="mt-16 flex flex-col gap-6">
         <button
           onClick={handleConfirm}
           disabled={submitting}
-          className="w-full bg-primary-container text-on-primary-container font-label-md text-lg py-5 rounded-lg shadow-lg shadow-primary-container/20 hover:brightness-110 active:scale-[0.98] transition-all uppercase tracking-[0.2em] disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          className="w-full bg-primary text-on-primary font-label-md text-lg py-6 rounded-md shadow-xl shadow-primary/20 hover:opacity-90 active:scale-[0.98] transition-all uppercase tracking-[0.2em] disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-3"
         >
           {submitting && (
-            <span className="w-5 h-5 border-2 border-on-primary-container/30 border-t-on-primary-container rounded-full animate-spin" />
+            <span className="w-5 h-5 border-2 border-on-primary/30 border-t-on-primary rounded-full animate-spin" />
           )}
-          {submitting ? 'Confirming…' : user ? 'Confirm Booking' : 'Sign In & Confirm'}
+          {submitting ? 'Confirming Appointment…' : user ? 'Secure Appointment' : 'Sign In & Confirm'}
         </button>
-        <Link href="/book/time" className="text-center text-tertiary font-label-sm hover:text-on-surface transition-colors">
-          ← Back to Time Selection
+        <Link href="/book/time" className="text-center text-on-surface-variant font-label-md uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+          <span className="material-symbols-outlined text-sm">arrow_back</span>
+          Modify Time selection
         </Link>
-        <p className="text-center font-label-sm text-tertiary px-6">
-          By confirming, you agree to our 24-hour cancellation policy.
+        <p className="text-center font-label-md text-[10px] text-on-surface-variant opacity-40 uppercase tracking-widest px-10 leading-relaxed mt-4">
+          By securing this appointment, you acknowledge our professional studio policies and 24-hour rescheduling window.
         </p>
       </footer>
     </main>

@@ -43,12 +43,14 @@ function safeWeeklyHours(raw: unknown): WeeklyHours {
 
 function Section({ title, icon, children }: { title: string; icon: string; children: React.ReactNode }) {
   return (
-    <section className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 shadow-md shadow-black/5 overflow-hidden">
-      <div className="flex items-center gap-3 px-6 py-4 border-b border-outline-variant/30 bg-surface-container/40">
-        <span className="material-symbols-outlined text-primary-container text-[20px]">{icon}</span>
-        <h3 className="font-headline-sm text-on-surface">{title}</h3>
+    <section className="bg-surface-container-low rounded-lg shadow-technical overflow-hidden border border-white/5">
+      <div className="flex items-center gap-5 px-10 py-8 border-b border-outline-variant/10 bg-surface-container-high/20">
+        <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center text-primary">
+           <span className="material-symbols-outlined text-[20px]">{icon}</span>
+        </div>
+        <h3 className="font-display-lg text-2xl text-on-surface lowercase tracking-tighter">{title}</h3>
       </div>
-      <div className="p-6">{children}</div>
+      <div className="p-10">{children}</div>
     </section>
   );
 }
@@ -56,7 +58,7 @@ function Section({ title, icon, children }: { title: string; icon: string; child
 // ─── Field helpers ────────────────────────────────────────────────────────────
 
 function FieldLabel({ children }: { children: React.ReactNode }) {
-  return <span className="font-label-sm text-tertiary uppercase tracking-wider block mb-1.5">{children}</span>;
+  return <span className="font-label-md text-on-surface-variant uppercase tracking-[0.2em] text-[10px] opacity-40 block mb-3">{children}</span>;
 }
 
 function TextInput({
@@ -69,9 +71,9 @@ function TextInput({
       value={value}
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
-      className="w-full px-4 py-3 rounded-lg bg-surface-container border border-outline-variant
-        text-on-surface font-body-md focus:outline-none focus:ring-2 focus:ring-primary-container
-        transition-all placeholder:text-outline"
+      className="w-full px-5 py-4 rounded-md bg-surface-container-high border-none
+        text-on-surface font-display-lg text-lg focus:ring-1 focus:ring-primary
+        transition-all placeholder:text-on-surface-variant/20 placeholder:lowercase"
     />
   );
 }
@@ -80,7 +82,7 @@ function NumberInput({
   id, value, onChange, min, max, step = 1, unit,
 }: { id: string; value: number; onChange: (v: number) => void; min?: number; max?: number; step?: number; unit?: string }) {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-4">
       <input
         id={id}
         type="number"
@@ -89,10 +91,10 @@ function NumberInput({
         max={max}
         step={step}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="w-28 px-4 py-3 rounded-lg bg-surface-container border border-outline-variant
-          text-on-surface font-body-md focus:outline-none focus:ring-2 focus:ring-primary-container transition-all"
+        className="w-28 px-5 py-4 rounded-md bg-surface-container-high border-none
+          text-on-surface font-display-lg text-lg focus:ring-1 focus:ring-primary transition-all"
       />
-      {unit && <span className="font-label-sm text-tertiary">{unit}</span>}
+      {unit && <span className="font-label-md text-on-surface-variant text-[11px] uppercase tracking-widest opacity-60">{unit}</span>}
     </div>
   );
 }
@@ -184,44 +186,44 @@ function BusinessHoursEditor({ hours, onChange }: { hours: WeeklyHours; onChange
   }
 
   return (
-    <div className="space-y-2">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {DAY_LABELS.map(({ key, label }) => {
         const day = hours[key] ?? { enabled: false, start: '09:00', end: '18:00' };
         return (
-          <div key={key} className={`flex flex-col sm:flex-row sm:items-center gap-3 p-3 rounded-lg transition-colors
-            ${day.enabled ? 'bg-surface-container' : 'bg-surface-container/40 opacity-60'}`}>
-            <div className="flex items-center gap-3 w-32 shrink-0">
+          <div key={key} className={`flex items-center justify-between gap-5 p-6 rounded-md transition-all duration-500
+            ${day.enabled ? 'bg-surface-container-high shadow-technical border border-white/5' : 'bg-surface-container-high/20 opacity-30'}`}>
+            <div className="flex items-center gap-5">
               <button
                 id={`hours-toggle-${key}`}
                 onClick={() => setDay(key, { enabled: !day.enabled })}
-                className={`relative w-10 h-5 rounded-full transition-colors ${day.enabled ? 'bg-primary-container' : 'bg-surface-container-high'}`}
+                className={`relative w-12 h-6 rounded-full transition-colors ${day.enabled ? 'bg-primary' : 'bg-surface-container-highest'}`}
               >
-                <span className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${day.enabled ? 'left-5' : 'left-0.5'}`} />
+                <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow-technical transition-transform ${day.enabled ? 'left-6' : 'left-0.5'}`} />
               </button>
-              <span className="font-label-md text-on-surface text-sm w-16">{label.slice(0, 3)}</span>
+              <span className="font-display-lg text-lg text-on-surface lowercase w-12">{label.slice(0, 3)}</span>
             </div>
             {day.enabled ? (
-              <div className="flex items-center gap-2 flex-1">
+              <div className="flex items-center gap-4">
                 <input
                   id={`hours-start-${key}`}
                   type="time"
                   value={day.start || ''}
                   onChange={(e) => setDay(key, { start: e.target.value })}
-                  className="px-3 py-1.5 rounded-lg bg-surface-container-lowest border border-outline-variant
-                    text-on-surface font-body-sm focus:outline-none focus:ring-1 focus:ring-primary-container transition-all"
+                  className="px-4 py-2 rounded-md bg-surface-container-low border-none
+                    text-on-surface font-display-lg text-lg focus:ring-1 focus:ring-primary transition-all"
                 />
-                <span className="text-tertiary font-label-sm">to</span>
+                <span className="text-[9px] font-label-md uppercase tracking-[0.2em] opacity-30">to</span>
                 <input
                   id={`hours-end-${key}`}
                   type="time"
                   value={day.end || ''}
                   onChange={(e) => setDay(key, { end: e.target.value })}
-                  className="px-3 py-1.5 rounded-lg bg-surface-container-lowest border border-outline-variant
-                    text-on-surface font-body-sm focus:outline-none focus:ring-1 focus:ring-primary-container transition-all"
+                  className="px-4 py-2 rounded-md bg-surface-container-low border-none
+                    text-on-surface font-display-lg text-lg focus:ring-1 focus:ring-primary transition-all"
                 />
               </div>
             ) : (
-              <span className="font-label-sm text-tertiary italic">Closed</span>
+              <span className="text-[10px] font-label-md uppercase tracking-[0.3em] opacity-40">Inactive</span>
             )}
           </div>
         );
@@ -309,25 +311,28 @@ export default function SettingsPage() {
 
   return (
     <ErrorBoundary>
-      <main className="px-margin-mobile md:px-margin-desktop max-w-4xl mx-auto min-h-screen pb-12">
+      <main className="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto min-h-screen pb-24">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-stack-lg gap-4">
-          <div className="space-y-1">
-            <span className="font-label-md text-primary tracking-widest uppercase block">Admin</span>
-            <h2 className="font-headline-lg text-on-surface">Shop Settings</h2>
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-10 mt-12">
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <span className="w-1.5 h-1.5 bg-primary rounded-full"></span>
+              <span className="font-label-md text-on-surface-variant uppercase tracking-[0.3em] text-[10px] opacity-40">System Core</span>
+            </div>
+            <h2 className="font-display-lg text-display-lg text-on-surface tracking-tighter lowercase">studio <span className="text-primary">configuration</span></h2>
           </div>
           <button
             id="save-settings-btn"
             disabled={saving || loading}
             onClick={handleSave}
-            className="flex items-center gap-2 px-6 py-3 bg-primary-container text-on-primary-container
-              font-label-md rounded-lg shadow-md hover:brightness-110 transition-all
-              disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-4 px-10 py-5 bg-primary text-on-primary
+              font-label-md rounded-md shadow-technical hover:opacity-90 transition-all uppercase tracking-[0.2em] text-[11px]
+              disabled:opacity-30 disabled:cursor-not-allowed active:scale-95"
           >
             {saving
-              ? <span className="w-4 h-4 border-2 border-on-primary-container/30 border-t-on-primary-container rounded-full animate-spin" />
-              : <span className="material-symbols-outlined text-[18px]">save</span>}
-            Save Settings
+              ? <span className="w-4 h-4 border-2 border-on-primary/30 border-t-on-primary rounded-full animate-spin" />
+              : <span className="material-symbols-outlined text-[20px]">save</span>}
+            Commit Changes
           </button>
         </div>
 

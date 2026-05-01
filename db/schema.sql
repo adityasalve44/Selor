@@ -530,11 +530,13 @@ begin
 
   perform public.record_audit_event(
     v_user_id,
-    case
+    (
+      case
       when v_user_role = 'admin' then 'admin'
       when v_user_role = 'barber' then 'barber'
       else 'customer'
-    end,
+      end
+    )::public.audit_actor_type,
     'appointment',
     v_appointment.id,
     'created',
@@ -797,11 +799,13 @@ begin
 
   perform public.record_audit_event(
     v_user_id,
-    case
+    (
+      case
       when v_user.role = 'admin' then 'admin'
       when v_user.role = 'barber' then 'barber'
       else 'customer'
-    end,
+      end
+    )::public.audit_actor_type,
     'appointment',
     v_appointment.id,
     p_action,
@@ -910,11 +914,13 @@ begin
 
   perform public.record_audit_event(
     v_user_id,
-    case
+    (
+      case
       when v_user_role = 'admin' then 'admin'
       when v_user_role = 'barber' then 'barber'
       else 'customer'
-    end,
+      end
+    )::public.audit_actor_type,
     'queue_token',
     v_token.id,
     'joined',
@@ -1024,7 +1030,7 @@ begin
 
   perform public.record_audit_event(
     v_user_id,
-    case when v_user.role = 'admin' then 'admin' else 'barber' end,
+    (case when v_user.role = 'admin' then 'admin' else 'barber' end)::public.audit_actor_type,
     'queue_token',
     v_token.id,
     'assigned',
@@ -1132,7 +1138,7 @@ begin
 
   perform public.record_audit_event(
     v_user_id,
-    case when v_user.role = 'admin' then 'admin' else 'barber' end,
+    (case when v_user.role = 'admin' then 'admin' else 'barber' end)::public.audit_actor_type,
     'queue_token',
     v_token.id,
     'completed',

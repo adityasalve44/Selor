@@ -1,69 +1,95 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { useTheme } from '../ThemeProvider';
-import { useAuth } from '../AuthProvider';
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useTheme } from "../ThemeProvider";
+import { useAuth } from "../AuthProvider";
 
 const bottomNavLinks = [
-  { label: 'Home', href: '/dashboard', icon: 'dashboard' },
-  { label: 'Services', href: '/book/service', icon: 'content_cut' },
-  { label: 'Book', href: '/book/time', icon: 'calendar_today' },
-  { label: 'Queue', href: '/dashboard', icon: 'groups' },
+  { label: "Home", href: "/dashboard", icon: "dashboard" },
+  { label: "Services", href: "/book/service", icon: "content_cut" },
+  { label: "Book", href: "/book/time", icon: "calendar_today" },
+  { label: "Queue", href: "/dashboard", icon: "groups" },
 ];
 
-export function CustomerTopNav({ showBack = false, title = 'Selor' }: { showBack?: boolean; title?: string }) {
+export function CustomerTopNav({
+  showBack = false,
+  title = "The Selor",
+}: {
+  showBack?: boolean;
+  title?: string;
+}) {
   const router = useRouter();
   const { theme, toggleTheme } = useTheme();
   const { user, loading, signInWithGoogle, signOut } = useAuth();
 
   return (
-    <nav className="bg-background/80 backdrop-blur-md sticky top-0 z-50 border-b border-outline-variant shadow-sm">
-      <div className="flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto">
-        <div className="flex items-center gap-4">
+    <nav className="bg-surface sticky top-0 z-50 transition-all duration-500">
+      <div className="flex justify-between items-center w-full px-8 py-6 max-w-7xl mx-auto">
+        <div className="flex items-center gap-6">
           {showBack ? (
             <button
               onClick={() => router.back()}
-              className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors text-on-surface"
+              className="w-12 h-12 flex items-center justify-center rounded-md bg-surface-container-low hover:bg-surface-container-high transition-all text-on-surface shadow-technical active:scale-95"
             >
-              <span className="material-symbols-outlined">arrow_back</span>
+              <span className="material-symbols-outlined text-lg">
+                arrow_back
+              </span>
             </button>
           ) : null}
-          <Link href="/dashboard" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-primary-container bg-surface-container-high flex items-center justify-center md:hidden">
-              <span className="material-symbols-outlined text-primary text-sm">content_cut</span>
+          <Link href="/dashboard" className="flex items-center gap-4 group">
+            <div className="w-11 h-11 rounded-md overflow-hidden bg-primary flex items-center justify-center shadow-technical transition-transform group-hover:scale-105">
+              <span className="material-symbols-outlined text-on-primary text-xl">
+                architecture
+              </span>
             </div>
-            <span className="text-lg font-bold tracking-widest text-on-surface uppercase">{title}</span>
+            <div className="flex flex-col -gap-1">
+              <span className="text-xl font-display-lg text-on-surface tracking-tighter lowercase leading-none">
+                Selor<span className="text-primary">.</span>
+              </span>
+              <span className="text-[9px] font-label-md uppercase tracking-[0.3em] text-on-surface-variant opacity-40">
+                Precision Grooming
+              </span>
+            </div>
           </Link>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-5">
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-full hover:bg-surface-container transition-colors text-outline hover:text-primary"
+            className="w-11 h-11 flex items-center justify-center rounded-md bg-surface-container-low hover:bg-surface-container-high transition-all text-outline hover:text-primary active:scale-90"
             aria-label="Toggle Theme"
           >
-            <span className="material-symbols-outlined">{theme === 'dark' ? 'light_mode' : 'dark_mode'}</span>
+            <span className="material-symbols-outlined text-[20px]">
+              {theme === "dark" ? "light_mode" : "dark_mode"}
+            </span>
           </button>
-          {loading ? null : user && (user as any).role === 'admin' ? (
-            <Link href="/admin" className="text-outline hover:text-primary text-sm font-medium transition-colors hidden md:block border border-outline-variant px-3 py-1 rounded-full hover:bg-surface-container">
-              Admin Portal
+          {loading ? null : user && (user as any).role === "admin" ? (
+            <Link
+              href="/admin"
+              className="text-on-surface-variant font-label-md uppercase tracking-[0.2em] text-[10px] opacity-40 hover:opacity-100 transition-all px-4 py-2 rounded-md hover:bg-surface-container-low"
+            >
+              Portal
             </Link>
           ) : null}
           {loading ? null : user ? (
             <button
               onClick={signOut}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-outline-variant hover:bg-surface-container text-sm font-medium transition-colors text-on-surface"
+              className="flex items-center gap-3 px-6 py-3 rounded-md bg-surface-container-low hover:bg-surface-container-high text-[10px] font-label-md transition-all text-on-surface-variant uppercase tracking-[0.2em] active:scale-95"
             >
-              <span className="material-symbols-outlined text-[18px]">logout</span>
+              <span className="material-symbols-outlined text-[16px]">
+                logout
+              </span>
               <span className="hidden md:inline">Sign Out</span>
             </button>
           ) : (
             <button
               onClick={signInWithGoogle}
-              className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-container text-on-primary-container text-sm font-medium transition-all hover:brightness-110 shadow-sm"
+              className="flex items-center gap-3 px-8 py-3 rounded-md bg-primary text-on-primary text-[10px] font-label-md transition-all hover:opacity-90 shadow-technical uppercase tracking-[0.2em] active:scale-95"
             >
-              <span className="material-symbols-outlined text-[18px]">login</span>
-              <span>Sign In</span>
+              <span className="material-symbols-outlined text-[16px]">
+                login
+              </span>
+              <span>Authenticate</span>
             </button>
           )}
         </div>
@@ -75,24 +101,35 @@ export function CustomerTopNav({ showBack = false, title = 'Selor' }: { showBack
 export function CustomerBottomNav() {
   const pathname = usePathname();
   return (
-    <nav className="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-3 bg-background border-t border-outline-variant shadow-[0_-10px_30px_rgba(0,0,0,0.03)] z-50 rounded-t-xl pb-safe">
+    <nav className="fixed bottom-8 left-1/2 -translate-x-1/2 w-[calc(100%-48px)] max-w-lg flex justify-around items-center px-8 py-6 bg-surface-container-low/80 backdrop-blur-xl rounded-full shadow-technical z-50 pb-safe border border-white/5">
       {bottomNavLinks.map((link) => {
-        const isActive = pathname === link.href || (link.href !== '/dashboard' && pathname.startsWith(link.href));
+        const isActive =
+          pathname === link.href ||
+          (link.href !== "/dashboard" && pathname.startsWith(link.href));
         return (
           <Link
             key={link.label}
             href={link.href}
-            className={`flex flex-col items-center justify-center gap-1 text-[11px] font-medium uppercase tracking-wider transition-transform ${
-              isActive ? 'text-primary scale-105' : 'text-outline hover:text-primary'
+            className={`flex flex-col items-center justify-center gap-2 transition-all duration-500 ${
+              isActive
+                ? "text-primary scale-110"
+                : "text-on-surface-variant opacity-40 hover:opacity-100"
             }`}
           >
             <span
-              className="material-symbols-outlined text-2xl"
-              style={isActive ? { fontVariationSettings: "'FILL' 1" } : undefined}
+              className="material-symbols-outlined text-[26px]"
+              style={
+                isActive ? { fontVariationSettings: "'FILL' 1" } : undefined
+              }
             >
               {link.icon}
             </span>
-            <span>{link.label}</span>
+            <span className="text-[9px] font-label-md uppercase tracking-[0.2em]">
+              {link.label}
+            </span>
+            {isActive && (
+              <div className="absolute -bottom-1 w-1 h-1 bg-primary rounded-full shadow-[0_0_8px_var(--color-primary)]"></div>
+            )}
           </Link>
         );
       })}

@@ -143,44 +143,60 @@ function InventoryContent() {
   }
 
   return (
-    <main className="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto min-h-screen">
+    <main className="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto min-h-screen pb-24">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-stack-md mb-stack-lg">
-        <div>
-          <h2 className="font-display-lg text-display-lg text-on-surface mb-2">Inventory Control</h2>
-          <p className="font-body-lg text-secondary">Manage premium stock levels and grooming supplies.</p>
+      <section className="mb-24 flex flex-col md:flex-row md:items-end justify-between gap-10 mt-12">
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
+             <span className="w-1.5 h-1.5 bg-primary rounded-full"></span>
+             <span className="font-label-md text-on-surface-variant uppercase tracking-[0.3em] text-[10px] opacity-40">Resource Distribution</span>
+          </div>
+          <h2 className="font-display-lg text-display-lg text-on-surface tracking-tighter lowercase">inventory <span className="text-primary">matrix</span></h2>
+          <p className="text-[10px] font-label-md text-on-surface-variant uppercase tracking-[0.2em] opacity-40">Managing {products.length} registered assets</p>
         </div>
-        <button 
+        <button
           onClick={() => handleOpenModal()}
-          className="bg-primary text-on-primary px-6 py-3 rounded-xl font-label-md shadow-lg shadow-primary/20 hover:brightness-110 transition-all flex items-center gap-2"
+          className="px-10 py-5 bg-primary text-on-primary rounded-md shadow-technical font-label-md uppercase tracking-[0.2em] text-[11px] hover:opacity-90 transition-all flex items-center gap-3 active:scale-95"
         >
-          <span className="material-symbols-outlined">add</span>
-          NEW PRODUCT
+          <span className="material-symbols-outlined text-[20px]">add</span>
+          initialize new asset
         </button>
-      </div>
+      </section>
 
       {/* Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-section-gap">
-        <div className="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-outline-variant/30">
-          <span className="text-outline font-label-sm uppercase tracking-wider">Total Value</span>
-          <div className="mt-2 flex items-baseline gap-2">
-            <span className="text-headline-lg font-bold text-on-surface">₹{stats.totalValue.toLocaleString()}</span>
-            <span className="text-primary text-label-sm font-bold">In Stock</span>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
+        <div className="bg-surface-container-low p-12 rounded-lg shadow-technical border border-white/5 relative overflow-hidden group">
+           <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full group-hover:scale-110 transition-transform duration-700"></div>
+           <div className="flex items-center gap-3 mb-10">
+              <span className="w-1.5 h-1.5 bg-primary rounded-full"></span>
+              <span className="text-on-surface-variant font-label-md uppercase tracking-[0.3em] text-[10px] opacity-40">Capital Valuation</span>
+           </div>
+          <div className="flex items-baseline gap-4">
+            <span className="text-5xl font-display-lg tracking-tighter text-on-surface">₹{stats.totalValue.toLocaleString()}</span>
+            <span className="text-primary text-[10px] font-bold uppercase tracking-widest opacity-60">Manifested</span>
           </div>
         </div>
-        <div className="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-outline-variant/30">
-          <span className="text-outline font-label-sm uppercase tracking-wider">Low Stock Alerts</span>
-          <div className="mt-2 flex items-center gap-3">
-            <span className={`text-headline-lg font-bold ${stats.lowStockCount > 0 ? 'text-error' : 'text-on-surface'}`}>
+        <div className="bg-surface-container-low p-12 rounded-lg shadow-technical border border-white/5 relative overflow-hidden group">
+           <div className="absolute top-0 right-0 w-32 h-32 bg-error/5 rounded-bl-full group-hover:scale-110 transition-transform duration-700"></div>
+           <div className="flex items-center gap-3 mb-10">
+              <span className="w-1.5 h-1.5 bg-error rounded-full"></span>
+              <span className="text-on-surface-variant font-label-md uppercase tracking-[0.3em] text-[10px] opacity-40">Critical Depletion</span>
+           </div>
+          <div className="flex items-center gap-5">
+            <span className={`text-5xl font-display-lg tracking-tighter ${stats.lowStockCount > 0 ? 'text-error' : 'text-on-surface'}`}>
               {stats.lowStockCount.toString().padStart(2, '0')}
             </span>
-            {stats.lowStockCount > 0 && <span className="material-symbols-outlined text-error" style={{ fontVariationSettings: "'FILL' 1" }}>warning</span>}
+            {stats.lowStockCount > 0 && <span className="material-symbols-outlined text-error animate-pulse text-[32px]">warning</span>}
           </div>
         </div>
-        <div className="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-outline-variant/30">
-          <span className="text-outline font-label-sm uppercase tracking-wider">Top Category</span>
-          <div className="mt-2">
-            <span className="text-headline-md font-bold text-on-surface">{stats.topCatName}</span>
+        <div className="bg-surface-container-low p-12 rounded-lg shadow-technical border border-white/5 relative overflow-hidden group">
+           <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full group-hover:scale-110 transition-transform duration-700"></div>
+           <div className="flex items-center gap-3 mb-10">
+              <span className="w-1.5 h-1.5 bg-primary rounded-full"></span>
+              <span className="text-on-surface-variant font-label-md uppercase tracking-[0.3em] text-[10px] opacity-40">Dominant Sector</span>
+           </div>
+          <div>
+            <span className="text-3xl font-display-lg tracking-tighter text-on-surface lowercase">{stats.topCatName}</span>
           </div>
         </div>
       </div>
@@ -191,58 +207,60 @@ function InventoryContent() {
           {[1, 2, 3].map(i => <SkeletonCard key={i} />)}
         </div>
       ) : (
-        <div className="space-y-section-gap pb-section-gap">
+        <div className="space-y-24 pb-24">
           {Object.entries(productsByCategory).map(([category, items]) => (
             <section key={category}>
-              <div className="flex items-center justify-between mb-stack-lg border-b border-outline-variant/20 pb-4">
-                <div className="flex items-center gap-3">
-                  <span className="material-symbols-outlined text-primary">
-                    {category === 'Tools' ? 'construction' : category === 'Shaving Supplies' ? 'content_cut' : 'spa'}
-                  </span>
-                  <h3 className="font-headline-md text-on-surface font-bold">{category}</h3>
-                  <span className="bg-surface-container-high px-3 py-0.5 rounded-full text-[10px] font-bold text-outline uppercase">
-                    {items.length} {items.length === 1 ? 'Item' : 'Items'}
-                  </span>
+              <div className="flex items-center justify-between mb-12 border-b border-outline-variant/10 pb-8">
+                <div className="flex items-center gap-6">
+                  <div className="w-12 h-12 rounded-md bg-surface-container-high flex items-center justify-center text-primary shadow-inner">
+                    <span className="material-symbols-outlined text-[22px]">
+                      {category === 'Tools' ? 'architecture' : category === 'Shaving Supplies' ? 'content_cut' : 'spa'}
+                    </span>
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="font-display-lg text-3xl text-on-surface lowercase tracking-tighter">{category}</h3>
+                    <p className="text-[9px] font-label-md text-on-surface-variant uppercase tracking-[0.3em] opacity-40">Sector Registry: {items.length} units manifested</p>
+                  </div>
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
                 {items.map((product) => (
-                  <div key={product.id} className="bg-surface-container-lowest rounded-2xl p-5 shadow-sm group hover:shadow-md transition-all border border-outline-variant/10">
-                    <div className="aspect-square rounded-xl bg-surface-container mb-4 overflow-hidden relative">
+                  <div key={product.id} className="bg-surface-container-low rounded-lg p-8 shadow-technical group transition-all duration-500 border border-white/5 relative overflow-hidden flex flex-col">
+                    <div className="aspect-[4/5] rounded-sm bg-surface-container-high mb-8 overflow-hidden relative shadow-inner">
                       {product.stockQuantity < 10 && (
-                        <div className="absolute top-2 left-2 bg-error text-on-error text-[10px] font-bold px-2 py-1 rounded-lg z-10">
-                          LOW STOCK
+                        <div className="absolute top-6 left-6 bg-error text-on-error text-[8px] font-bold px-4 py-2 rounded-sm z-10 uppercase tracking-[0.2em] shadow-technical">
+                          Depleted
                         </div>
                       )}
                       {product.imageUrl ? (
-                        <div className="relative w-full h-full">
-                          <img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src={product.imageUrl} alt={product.name} />
-                        </div>
+                        <img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 grayscale group-hover:grayscale-0" src={product.imageUrl} alt={product.name} />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-outline">
-                          <span className="material-symbols-outlined text-4xl">inventory_2</span>
+                        <div className="w-full h-full flex items-center justify-center text-primary/10">
+                          <span className="material-symbols-outlined text-[72px]">inventory_2</span>
                         </div>
                       )}
-                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                        <button onClick={() => handleOpenModal(product)} className="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center hover:scale-110 transition-transform">
-                          <span className="material-symbols-outlined">edit</span>
+                      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 backdrop-blur-sm flex items-center justify-center gap-6">
+                        <button onClick={() => handleOpenModal(product)} className="w-14 h-14 rounded-sm bg-white text-on-surface flex items-center justify-center shadow-technical hover:scale-110 active:scale-90 transition-all">
+                          <span className="material-symbols-outlined text-[20px]">edit</span>
                         </button>
-                        <button onClick={() => handleDelete(product.id)} className="w-10 h-10 rounded-full bg-error text-white flex items-center justify-center hover:scale-110 transition-transform">
-                          <span className="material-symbols-outlined">delete</span>
+                        <button onClick={() => handleDelete(product.id)} className="w-14 h-14 rounded-sm bg-error text-white flex items-center justify-center shadow-technical hover:scale-110 active:scale-90 transition-all">
+                          <span className="material-symbols-outlined text-[20px]">delete</span>
                         </button>
                       </div>
                     </div>
-                    <h4 className="font-label-md text-on-surface font-bold">{product.name}</h4>
-                    <p className="text-[10px] text-outline uppercase font-bold tracking-wider mb-3 truncate">{product.description || 'No description'}</p>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <span className="text-[10px] text-outline font-bold uppercase">Price</span>
-                        <div className="font-bold text-on-surface">₹{product.price.toLocaleString()}</div>
+                    <div className="space-y-2 mb-10">
+                      <h4 className="font-display-lg text-2xl text-on-surface lowercase tracking-tighter leading-tight group-hover:text-primary transition-colors">{product.name}</h4>
+                      <p className="text-[10px] font-label-md text-on-surface-variant uppercase tracking-[0.2em] opacity-40 leading-relaxed">{product.description || 'null specification'}</p>
+                    </div>
+                    <div className="flex items-center justify-between pt-8 border-t border-outline-variant/10 mt-auto">
+                      <div className="flex flex-col gap-1">
+                        <span className="text-[9px] text-on-surface-variant font-label-md uppercase tracking-[0.3em] opacity-20">Valuation</span>
+                        <div className="font-display-lg text-xl text-on-surface tracking-tighter">₹{product.price.toFixed(0)}</div>
                       </div>
-                      <div className="text-right">
-                        <span className="text-[10px] text-outline font-bold uppercase">Stock</span>
-                        <div className={`font-bold ${product.stockQuantity < 10 ? 'text-error' : 'text-primary'}`}>
-                          {product.stockQuantity} <span className="text-[10px] font-normal text-outline">Units</span>
+                      <div className="text-right flex flex-col gap-1">
+                        <span className="text-[9px] text-on-surface-variant font-label-md uppercase tracking-[0.3em] opacity-20">Registry</span>
+                        <div className={`font-display-lg text-xl tracking-tighter ${product.stockQuantity < 10 ? 'text-error' : 'text-primary'}`}>
+                          {product.stockQuantity}<span className="text-[10px] ml-1 opacity-40">units</span>
                         </div>
                       </div>
                     </div>
@@ -256,92 +274,100 @@ function InventoryContent() {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsModalOpen(false)} />
-          <div className="relative w-full max-w-lg bg-surface-container-lowest rounded-3xl shadow-2xl overflow-hidden border border-outline-variant/30">
-            <div className="px-8 py-6 border-b border-outline-variant/20 flex justify-between items-center">
-              <h3 className="text-xl font-bold text-on-surface uppercase tracking-widest">
-                {editingProduct ? 'Edit Product' : 'New Product'}
-              </h3>
-              <button onClick={() => setIsModalOpen(false)} className="text-outline hover:text-on-surface">
-                <span className="material-symbols-outlined">close</span>
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-8 bg-black/80">
+          <div className="absolute inset-0" onClick={() => setIsModalOpen(false)} />
+          <div className="relative w-full max-w-2xl bg-surface-container-low rounded-lg shadow-technical overflow-hidden border border-white/5 animate-in fade-in zoom-in duration-300">
+            <div className="px-10 py-10 border-b border-outline-variant/10 flex justify-between items-center bg-surface-container-high/20">
+              <div className="space-y-1">
+                 <div className="flex items-center gap-3">
+                    <span className="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                    <span className="text-[9px] font-label-md text-on-surface-variant uppercase tracking-[0.3em] opacity-40">Asset Registry</span>
+                 </div>
+                 <h3 className="font-display-lg text-3xl text-on-surface lowercase tracking-tighter">
+                   {editingProduct ? 'update asset manifest' : 'initialize stock item'}
+                 </h3>
+              </div>
+              <button onClick={() => setIsModalOpen(false)} className="w-12 h-12 flex items-center justify-center rounded-full text-on-surface-variant opacity-40 hover:opacity-100 transition-all hover:bg-surface-container-high">
+                <span className="material-symbols-outlined text-[20px]">close</span>
               </button>
             </div>
-            <form onSubmit={handleSubmit} className="p-8 space-y-6">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="col-span-2">
-                  <label className="block text-[10px] font-bold text-outline uppercase tracking-wider mb-2">Product Name</label>
+            <form onSubmit={handleSubmit} className="p-10 space-y-10">
+              <div className="grid grid-cols-2 gap-10">
+                <div className="col-span-2 space-y-3">
+                  <label className="block text-[10px] font-label-md text-on-surface-variant uppercase tracking-[0.3em] opacity-40">Nomenclature</label>
                   <input
                     required
                     type="text"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-surface-container-low border border-outline-variant/30 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    className="w-full px-6 py-5 rounded-md bg-surface-container-high border-none text-on-surface font-display-lg text-2xl focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-on-surface-variant/20 shadow-inner"
+                    placeholder="Asset designation"
                   />
                 </div>
-                <div className="col-span-2">
-                  <label className="block text-[10px] font-bold text-outline uppercase tracking-wider mb-2">Description</label>
+                <div className="col-span-2 space-y-3">
+                  <label className="block text-[10px] font-label-md text-on-surface-variant uppercase tracking-[0.3em] opacity-40">Technical Specifications</label>
                   <textarea
-                    rows={2}
+                    rows={3}
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-surface-container-low border border-outline-variant/30 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    className="w-full px-6 py-5 rounded-md bg-surface-container-high border-none text-on-surface font-body-md focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-on-surface-variant/20 shadow-inner resize-none"
+                    placeholder="Operational parameters and definition..."
                   />
                 </div>
-                <div>
-                  <label className="block text-[10px] font-bold text-outline uppercase tracking-wider mb-2">Price (₹)</label>
+                <div className="space-y-3">
+                  <label className="block text-[10px] font-label-md text-on-surface-variant uppercase tracking-[0.3em] opacity-40">Valuation (₹)</label>
                   <input
                     required
                     type="number"
                     value={formData.price}
                     onChange={(e) => setFormData({ ...formData, price: Number(e.target.value) })}
-                    className="w-full px-4 py-3 rounded-xl bg-surface-container-low border border-outline-variant/30 text-on-surface"
+                    className="w-full px-6 py-5 rounded-md bg-surface-container-high border-none text-on-surface font-display-lg text-2xl shadow-inner"
                   />
                 </div>
-                <div>
-                  <label className="block text-[10px] font-bold text-outline uppercase tracking-wider mb-2">Stock Level</label>
+                <div className="space-y-3">
+                  <label className="block text-[10px] font-label-md text-on-surface-variant uppercase tracking-[0.3em] opacity-40">Unit Quantization</label>
                   <input
                     required
                     type="number"
                     value={formData.stockQuantity}
                     onChange={(e) => setFormData({ ...formData, stockQuantity: Number(e.target.value) })}
-                    className="w-full px-4 py-3 rounded-xl bg-surface-container-low border border-outline-variant/30 text-on-surface"
+                    className="w-full px-6 py-5 rounded-md bg-surface-container-high border-none text-on-surface font-display-lg text-2xl shadow-inner"
                   />
                 </div>
-                <div>
-                  <label className="block text-[10px] font-bold text-outline uppercase tracking-wider mb-2">Category</label>
+                <div className="space-y-3">
+                  <label className="block text-[10px] font-label-md text-on-surface-variant uppercase tracking-[0.3em] opacity-40">Sector Classification</label>
                   <select
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-surface-container-low border border-outline-variant/30 text-on-surface"
+                    className="w-full px-6 py-5 rounded-md bg-surface-container-high border-none text-on-surface font-label-md uppercase tracking-[0.15em] text-[11px] shadow-inner appearance-none cursor-pointer"
                   >
                     {categories.map(c => <option key={c} value={c}>{c}</option>)}
                   </select>
                 </div>
-                <div>
-                  <label className="block text-[10px] font-bold text-outline uppercase tracking-wider mb-2">Image URL</label>
+                <div className="space-y-3">
+                  <label className="block text-[10px] font-label-md text-on-surface-variant uppercase tracking-[0.3em] opacity-40">Visual Manifest (URL)</label>
                   <input
                     type="text"
-                    placeholder="https://..."
+                    placeholder="https://resource.host/image.png"
                     value={formData.imageUrl}
                     onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-surface-container-low border border-outline-variant/30 text-on-surface"
+                    className="w-full px-6 py-5 rounded-md bg-surface-container-high border-none text-on-surface font-label-md text-[11px] shadow-inner"
                   />
                 </div>
               </div>
-              <div className="pt-4 flex gap-3">
+              <div className="pt-10 flex gap-6">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="flex-1 px-6 py-3 rounded-xl bg-surface-container-high text-on-surface font-bold uppercase tracking-wider hover:bg-surface-container-highest transition-all"
+                  className="flex-1 py-6 font-label-md text-on-surface-variant uppercase tracking-[0.3em] text-[10px] opacity-40 hover:opacity-100 transition-all hover:bg-surface-container-high rounded-md"
                 >
-                  Cancel
+                  Abort Operation
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 px-6 py-3 rounded-xl bg-primary text-on-primary font-bold uppercase tracking-wider shadow-lg shadow-primary/20 hover:brightness-110 transition-all"
+                  className="flex-2 py-6 bg-primary text-on-primary rounded-md font-label-md uppercase tracking-[0.3em] text-[11px] shadow-technical hover:opacity-90 transition-all active:scale-[0.98]"
                 >
-                  {editingProduct ? 'Update' : 'Create'}
+                  {editingProduct ? 'Commit Manifest Changes' : 'Execute Asset Initialization'}
                 </button>
               </div>
             </form>

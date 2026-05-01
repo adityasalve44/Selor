@@ -25,15 +25,22 @@ export class ErrorBoundary extends Component<Props, State> {
   render() {
     if (this.state.hasError) {
       return this.props.fallback ?? (
-        <div className="flex flex-col items-center justify-center min-h-[40vh] gap-4 text-center p-8">
-          <span className="material-symbols-outlined text-[56px] text-error">error_outline</span>
-          <h2 className="font-headline-lg text-on-surface">Something went wrong</h2>
-          <p className="text-tertiary max-w-sm">{this.state.message || 'An unexpected error occurred.'}</p>
+        <div className="flex flex-col items-center justify-center min-h-[50vh] gap-10 text-center p-20 bg-surface-container-low rounded-lg shadow-technical border border-white/5 mx-auto max-w-2xl mt-24 relative overflow-hidden group">
+          <div className="absolute inset-0 technical-grid opacity-5 group-hover:opacity-10 transition-opacity"></div>
+          <div className="w-24 h-24 rounded-sm bg-error/5 flex items-center justify-center text-error mb-4 shadow-inner border border-error/10">
+             <span className="material-symbols-outlined text-[40px]">terminal</span>
+          </div>
+          <div className="space-y-4 relative z-10">
+            <h2 className="font-display-lg text-5xl text-on-surface tracking-tighter lowercase">system <span className="text-error">interruption</span></h2>
+            <p className="font-label-md text-on-surface-variant text-[11px] uppercase tracking-[0.3em] opacity-40 leading-relaxed max-w-md mx-auto">
+              {this.state.message || 'An unhandled exception has occurred in the execution environment.'}
+            </p>
+          </div>
           <button
             onClick={() => this.setState({ hasError: false, message: '' })}
-            className="px-6 py-2 bg-primary-container text-on-primary-container rounded-lg font-label-md hover:brightness-110 transition-all"
+            className="px-12 py-6 bg-primary text-on-primary rounded-md font-label-md uppercase tracking-[0.3em] text-[11px] shadow-technical hover:opacity-90 transition-all active:scale-[0.98] mt-6"
           >
-            Try Again
+            re-initialize manifest
           </button>
         </div>
       );
